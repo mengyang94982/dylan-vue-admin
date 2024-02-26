@@ -1,3 +1,4 @@
+// @unocss-include
 import { getRgbOfColor } from "@sa/utils";
 import { $t } from "@/locales";
 import { localStg } from "@/utils/storage";

@@ -3,7 +3,7 @@
     <!--<Wrvebg :theme-color='bgThemeColor' />-->
     <!--<NCard :bordered='false' class='relative w-auto rd-12px z-4'>-->
     <!--  <div class='w-400px <sm:w-300px'>-->
-
+    login
     <!--  </div>-->
     <!--</NCard>-->
   </div>
@@ -13,9 +13,8 @@
 
 import {computed} from "vue";
 
-const bgColor='#ffffff'
-  // computed(()=>{
-  // const COLOR_WHITE='#ffffff'
-  // const ratio=themeStor
-// })
+const bgColor= computed(()=>{
+  const COLOR_WHITE='#ffffff'
+  const ratio=themeStor
+})
 </script>

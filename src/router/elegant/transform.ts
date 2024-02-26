@@ -147,6 +147,9 @@ const routeMap: RouteMap = {
   "exception_403": "/exception/403",
   "exception_404": "/exception/404",
   "exception_500": "/exception/500",
+  "403": "/403",
+  "404": "/404",
+  "500": "/500",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?"
 };
 

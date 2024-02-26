@@ -29,7 +29,7 @@ declare namespace Env {
     /**
      * 项目使用的路由模式
      */
-    readonly VITE_ROUTER_HITORY_MODE?: RouterHistoryMode;
+    readonly VITE_ROUTER_HISTORY_MODE?: RouterHistoryMode;
     /**
      * 图标的前缀
      */
