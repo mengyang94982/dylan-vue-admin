@@ -7,9 +7,24 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ButtonIcon: typeof import('./../components/custom/button-icon.vue')['default']
     ExceptionBase: typeof import('./../components/common/exception-base.vue')['default']
+    IconLocalLogo: typeof import('~icons/local/logo')['default']
+    LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
+    NCheckbox: typeof import('naive-ui')['NCheckbox']
+    NDropdown: typeof import('naive-ui')['NDropdown']
+    NForm: typeof import('naive-ui')['NForm']
+    NFormItem: typeof import('naive-ui')['NFormItem']
+    NInput: typeof import('naive-ui')['NInput']
+    NSpace: typeof import('naive-ui')['NSpace']
+    NTooltip: typeof import('naive-ui')['NTooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./../components/custom/svg-icon.vue')['default']
+    SystemLogo: typeof import('./../components/common/system-logo.vue')['default']
+    ThemeSchemeSwitch: typeof import('./../components/common/theme-scheme-switch.vue')['default']
+    WaveBg: typeof import('./../components/custom/wave-bg.vue')['default']
   }
 }
