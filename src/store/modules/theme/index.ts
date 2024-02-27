@@ -5,7 +5,7 @@ import {defineStore} from "pinia";
 import {useEventListener, usePreferredColorScheme} from "@vueuse/core";
 import {SetupStoreId} from "@/enum";
 import {localStg} from "@/utils/storage";
-import {initThemeSettings} from "./shared";
+import {getNaiveTheme, initThemeSettings} from "./shared";
 
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   const scope = effectScope()
@@ -19,6 +19,18 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     }
     return settings.value.themeScheme === 'dark'
   })
+
+  const themeColors=computed(()=>{
+    const {themeColor,otherColor,isInfoFollowPrimary}=settings.value
+    const colors:App.Theme.ThemeColor={
+      primary:themeColor,
+      ...otherColor,
+      info:isInfoFollowPrimary?themeColor:otherColor.info
+    }
+    return colors
+  })
+
+  const naiveTheme=computed(()=>getNaiveTheme(themeColors.value))
 
   function setThemeScheme(themeScheme:UnionKey.ThemeScheme){
     settings.value.themeScheme=themeScheme
@@ -38,6 +50,8 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   return {
     ...toRefs(settings.value),
     darkMode,
+    themeColors,
+    naiveTheme,
     setThemeScheme,
     toggleThemeScheme
   }

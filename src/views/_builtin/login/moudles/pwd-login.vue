@@ -53,6 +53,7 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue";
 import { $t } from "@/locales";
+import {loginModuleRecord} from "@/constants/app";
 import { useAuthStore } from "@/store/modules/auth";
 import { useRouterPush } from "@/hooks/common/router";
 import { useNaiveForm, useFormRules } from "@/hooks/common/form";
