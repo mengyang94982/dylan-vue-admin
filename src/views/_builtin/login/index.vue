@@ -64,6 +64,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   module: "pwd-login",
 });
+console.log("🚀 ~ props ~ props:", props);
 
 const appStore = useAppStore();
 
