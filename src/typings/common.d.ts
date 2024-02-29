@@ -1,23 +1,25 @@
-/**
- * 公共类型
- */
+/** The common type namespace */
 declare namespace CommonType {
-  /**
-   * 策略模式
-   */
+  /** The strategic pattern */
   interface StrategicPattern {
+    /** The condition */
     condition: boolean;
-    /**
-     * 如果条件为true，则执行回调函数
-     */
+    /** If the condition is true, then call the action function */
     callback: () => void;
   }
 
+  /**
+   * The option type
+   *
+   * @property value: The option value
+   * @property label: The option label
+   */
   type Option<K> = { value: K; label: string };
 
-  type YesOrNo = "Y" | "N";
+  type YesOrNo = 'Y' | 'N';
 
-  type RecordBullable<T> = {
+  /** add null to all properties */
+  type RecordNullable<T> = {
     [K in keyof T]?: T[K] | null;
   };
 }

@@ -1,5 +1,5 @@
 <template>
-  <GlobalContent :show-padding='false' />
+  <GlobalContent :show-padding='false'/>
 </template>
 
 <script

@@ -626,7 +626,7 @@ declare namespace App{
     type Response<T = unknown>={
       code:string
       msg:string
-      date:T
+      data:T
     }
     /**
      * 后台返回数据类型
