@@ -1,4 +1,6 @@
-declare namespace App{
+/** The global namespace for the app */
+declare namespace App {
+  /** Theme namespace */
   namespace Theme {
     type ColorPaletteNumber = import('@sa/color-palette').ColorPaletteNumber;
 
@@ -122,6 +124,7 @@ declare namespace App{
     }
   }
 
+  /** Global namespace */
   namespace Global {
     type VNode = import('vue').VNode;
     type RouteLocationNormalizedLoaded = import('vue-router').RouteLocationNormalizedLoaded;
@@ -219,6 +222,11 @@ declare namespace App{
     type DropdownKey = 'closeCurrent' | 'closeOther' | 'closeLeft' | 'closeRight' | 'closeAll';
   }
 
+  /**
+   * I18n namespace
+   *
+   * Locales type
+   */
   namespace I18n {
     type RouteKey = import('@elegant-router/types').RouteKey;
 
@@ -589,52 +597,44 @@ declare namespace App{
       (key: I18nKey, named: Record<string, unknown>, defaultMsg: string): string;
     }
   }
-  /**
-   * 服务的命名空间
-   */
-  namespace Service{
-    /**
-     * 当前的环境
-     */
-    type EnvType='dev'|'test'|'prod'
-    /**
-     * 其他的基本路径
-     */
-    type OtherBaseURLKey='demo'
 
-    /**
-     * 后端服务的配置
-     */
-    interface ServiceConfig<T extends OtherBaseURLKey=OtherBaseURLKey>{
-      /**
-       * 基本路径
-       */
-      baseURL:string
-      /**
-       * 其他的基本路径
-       */
-      otherBaseURL:Record<T, string>
+  /** Service namespace */
+  namespace Service {
+    /** The backend service env type */
+    type EnvType = 'dev' | 'test' | 'prod';
+
+    /** Other baseURL key */
+    type OtherBaseURLKey = 'demo';
+
+    /** The backend service config */
+    interface ServiceConfig<T extends OtherBaseURLKey = OtherBaseURLKey> {
+      /** The backend service base url */
+      baseURL: string;
+      /** Other backend service base url map */
+      otherBaseURL: Record<T, string>;
     }
 
-    /**
-     * 配置映射
-     */
-    type ServiceConfigMap=Record<EnvType, ServiceConfig>
-    /**
-     * 后台返回数据类型
-     */
-    type Response<T = unknown>={
-      code:string
-      msg:string
-      data:T
-    }
-    /**
-     * 后台返回数据类型
-     */
-    type DemoResponse<T=unknown>={
-      status:string
-      message:string
-      result:T
-    }
+    /** The backend service config map */
+    type ServiceConfigMap = Record<EnvType, ServiceConfig>;
+
+    /** The backend service response data */
+    type Response<T = unknown> = {
+      /** The backend service response code */
+      code: string;
+      /** The backend service response message */
+      msg: string;
+      /** The backend service response data */
+      data: T;
+    };
+
+    /** The demo backend service response data */
+    type DemoResponse<T = unknown> = {
+      /** The backend service response code */
+      status: string;
+      /** The backend service response message */
+      message: string;
+      /** The backend service response data */
+      result: T;
+    };
   }
 }
