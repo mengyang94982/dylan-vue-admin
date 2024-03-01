@@ -12,6 +12,7 @@ declare module 'vue' {
     DarkModeContainer: typeof import('./../components/common/dark-mode-container.vue')['default']
     ExceptionBase: typeof import('./../components/common/exception-base.vue')['default']
     LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
+    MenuToggler: typeof import('./../components/common/menu-toggler.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
