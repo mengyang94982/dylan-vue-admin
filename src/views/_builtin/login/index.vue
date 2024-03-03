@@ -56,6 +56,7 @@ import { useAppStore } from "@/store/modules/app";
 import { loginModuleRecord } from "@/constants/app";
 
 import PwdLogin from "./moudles/pwd-login.vue";
+import {useRouter} from "vue-router";
 
 interface Props {
   module?: UnionKey.LoginModule;
@@ -64,7 +65,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   module: "pwd-login",
 });
-console.log("🚀 ~ props ~ props:", props);
+
 
 const appStore = useAppStore();
 

@@ -1,21 +1,19 @@
-import {CustomRoute, ElegantRoute,ElegantConstRoute} from "@elegant-router/types";
+import type { CustomRoute, ElegantConstRoute, ElegantRoute } from '@elegant-router/types';
 import { generatedRoutes } from '../elegant/routes';
+import { layouts, views } from '../elegant/imports';
+import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
 
-import {layouts,views} from "../elegant/imports";
-
-import {transformElegantRoutesToVueRoutes} from "../elegant/transform";
-
-export const ROOT_ROUTE:CustomRoute={
-  name:'root',
-  path:'/',
-  redirect:'/home',
-  meta:{
-    title:'root',
-    constant:true
+export const ROOT_ROUTE: CustomRoute = {
+  name: 'root',
+  path: '/',
+  redirect: '/home',
+  meta: {
+    title: 'root',
+    constant: true
   }
-}
+};
 
-const customRoutes:CustomRoute[]=[
+const customRoutes: CustomRoute[] = [
   ROOT_ROUTE,
   {
     name: 'not-found',
@@ -27,14 +25,14 @@ const customRoutes:CustomRoute[]=[
     }
   },
   {
-    name:'exception',
-    path:'/exception',
-    component:'layout.base',
-    meta:{
-      title:'exception',
-      i18nKey:'route.exception',
-      icon:'ant-design:exception-outlined',
-      order:7
+    name: 'exception',
+    path: '/exception',
+    component: 'layout.base',
+    meta: {
+      title: 'exception',
+      i18nKey: 'route.exception',
+      icon: 'ant-design:exception-outlined',
+      order: 7
     },
     children: [
       {
@@ -69,19 +67,21 @@ const customRoutes:CustomRoute[]=[
       }
     ]
   }
-]
+];
 
+/** Create routes */
 export function createRoutes() {
-  const constantRoutes:ElegantRoute[] = [];
-  const authRoutes:ElegantRoute[] = [];
+  const constantRoutes: ElegantRoute[] = [];
 
-  [...customRoutes,...generatedRoutes].forEach(item=>{
+  const authRoutes: ElegantRoute[] = [];
+
+  [...customRoutes, ...generatedRoutes].forEach(item => {
     if (item.meta?.constant) {
       constantRoutes.push(item);
     } else {
       authRoutes.push(item);
     }
-  })
+  });
 
   const constantVueRoutes = transformElegantRoutesToVueRoutes(constantRoutes, layouts, views);
 
@@ -91,6 +91,11 @@ export function createRoutes() {
   };
 }
 
-export function getAuthVueRoutes (routes:ElegantConstRoute[]) {
-  return transformElegantRoutesToVueRoutes(routes,layouts,views)
+/**
+ * Get auth vue routes
+ *
+ * @param routes Elegant routes
+ */
+export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
+  return transformElegantRoutesToVueRoutes(routes, layouts, views);
 }

@@ -19,7 +19,7 @@
       />
       <GlobalBreadcrumb v-if="!appStore.isMobile" class="ml-12px" />
     </div>
-    <div class="flx-y-center justify-end h-full">
+    <div class="flex-y-center justify-end h-full">
       <FullScreen
         v-if="!appStore.isMobile"
         :full="isFullscreen"

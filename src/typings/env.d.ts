@@ -1,73 +1,67 @@
 /**
- * 命名空间环境
+ * Namespace Env
  *
- * 用于声明import.meta对象的类型
+ * It is used to declare the type of the import.meta object
  */
-
 declare namespace Env {
-  /**
-   * 路由历史记录
-   */
-  type RouterHistoryMode = "hash" | "history" | "memory";
+  /** The router history mode */
+  type RouterHistoryMode = 'hash' | 'history' | 'memory';
 
-  /**
-   * import.meta的接口
-   */
+  /** Interface for import.meta */
   interface ImportMeta extends ImportMetaEnv {
-    /**
-     * 项目的基础url
-     */
+    /** The base url of the application */
     readonly VITE_BASE_URL: string;
-    /**
-     * 项目的名称
-     */
+    /** The title of the application */
     readonly VITE_APP_TITLE: string;
-    /**
-     * 项目的介绍
-     */
+    /** The description of the application */
     readonly VITE_APP_DESC: string;
-    /**
-     * 项目使用的路由模式
-     */
+    /** The router history mode */
     readonly VITE_ROUTER_HISTORY_MODE?: RouterHistoryMode;
+    /** The prefix of the iconify icon */
+    readonly VITE_ICON_PREFIX: 'icon';
     /**
-     * 图标的前缀
+     * The prefix of the local icon
+     *
+     * This prefix is start with the icon prefix
      */
-    readonly VITE_ICON_PREFIX: "icon";
+    readonly VITE_ICON_LOCAL_PREFIX: 'local-icon';
     /**
-     * 本地图标的前缀
-     */
-    readonly VITE_ICON_LOCAL_PREFIX: "local-icon";
-    /**
-     * 是否启用代理 仅在开发模式下有效
+     * Whether to enable the http proxy
+     *
+     * Only valid in the development environment
      */
     readonly VITE_HTTP_PROXY?: CommonType.YesOrNo;
-    /**
-     * 后台开发环境
-     */
+    /** The back service env */
     readonly VITE_SERVICE_ENV?: App.Service.EnvType;
     /**
-     * 静态路由：路由写死在前台
-     * 动态路由：路由由后台返回
+     * The auth route mode
+     *
+     * - Static: the auth routes is generated in front-end
+     * - Dynamic: the auth routes is generated in back-end
      */
-    readonly VITE_AUTH_ROUTE_MODE: "static" | "dynamic";
+    readonly VITE_AUTH_ROUTE_MODE: 'static' | 'dynamic';
     /**
-     * 路由首页
-     * 只有在静态路由才有效
-     * 动态路由由后台返回
+     * The home route key
+     *
+     * It only has effect when the auth route mode is static, if the route mode is dynamic, the home route key is
+     * defined in the back-end
      */
-    readonly VITE_ROUTE_HOME: import("@elegant-router/types").LastLevelRouteKey;
+    readonly VITE_ROUTE_HOME: import('@elegant-router/types').LastLevelRouteKey;
     /**
-     * 默认的菜单图标
+     * Default menu icon if menu icon is not set
+     *
+     * Iconify icon name
      */
-    readonly VITE_MENU_ICON:string
+    readonly VITE_MENU_ICON: string;
+    /** Whether to build with sourcemap */
+    readonly VITE_SOURCE_MAP?: CommonType.YesOrNo;
     /**
-     * 是否启用source-map
+     * Iconify api provider url
+     *
+     * If the project is deployed in intranet, you can set the api provider url to the local iconify server
+     *
+     * @link https://docs.iconify.design/api/providers.html
      */
-    readonly VITE_SOURCE_MAP:CommonType.YesOrNo
-    /**
-     * 图标部署到自己的网址
-     */
-    readonly VITE_ICONIFY_URL?:string
+    readonly VITE_ICONIFY_URL?: string;
   }
 }

@@ -1,30 +1,27 @@
 <template>
-  <ButtonIcon :tooltip-content='collapsed?$t("icon.expand"):$t("icon.collapse")' tooltip-placement='bottom-start'>
-    <SvgIcon :icon='icon' />
+  <ButtonIcon :tooltip-content="collapsed ? $t('icon.expand') : $t('icon.collapse')" tooltip-placement="bottom-start">
+    <SvgIcon :icon="icon" />
   </ButtonIcon>
 </template>
 
-<script
-  setup
-  lang="ts"
->
-import {computed, defineOptions} from 'vue'
-import {$t} from '@/locales'
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { $t } from '@/locales';
 
-defineOptions({
-  name:'MenuToggler'
-})
+defineOptions({ name: 'MenuToggler' });
 
-interface Props{
-  collapsed?:boolean
-  arrowIcon?:boolean
+interface Props {
+  /** Show collapsed icon */
+  collapsed?: boolean;
+  /** Arrow style icon */
+  arrowIcon?: boolean;
 }
 
-const props=defineProps<Props>()
+const props = defineProps<Props>();
 
-type NumberBool=0|1
+type NumberBool = 0 | 1;
 
-const icon=computed(()=>{
+const icon = computed(() => {
   const icons: Record<NumberBool, Record<NumberBool, string>> = {
     0: {
       0: 'line-md:menu-fold-left',
@@ -36,11 +33,14 @@ const icon=computed(()=>{
     }
   };
 
-  const arrowIcon=Number(props.arrowIcon || false) as NumberBool
-  const collapsed=
-})
+  const arrowIcon = Number(props.arrowIcon || false) as NumberBool;
+
+  const collapsed = Number(props.collapsed || false) as NumberBool;
+
+  return icons[arrowIcon][collapsed];
+});
 </script>
 
-<style scoped>
 
-</style>
+
+<style scoped></style>

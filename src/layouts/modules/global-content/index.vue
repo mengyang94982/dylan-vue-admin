@@ -1,11 +1,19 @@
 <template>
   <RouterView v-slot='{Component,route}'>
-    <Transition :name="themeStore.page.animateMode"
-                mode="out-in"
-                @before-leave="appStore.setContentXScrollable(true)"
-                @after-enter="appStore.setContentXScrollable(false)">
+    <Transition
+      :name="themeStore.page.animateMode"
+      mode="out-in"
+      @before-leave="appStore.setContentXScrollable(true)"
+      @after-enter="appStore.setContentXScrollable(false)"
+    >
       <KeepAlive :include='routeStore.cacheRoutes'>
-        <component :is='Component' v-if='appStore.reloadFlag' :key='route.path' :class="{'p-16px':showPadding}" class='flex-grow bg-layout transition-300'/>
+        <component
+          :is='Component'
+          v-if='appStore.reloadFlag'
+          :key='route.path'
+          :class="{'p-16px':showPadding}"
+          class='flex-grow bg-layout transition-300'
+        />
       </KeepAlive>
     </Transition>
   </RouterView>
@@ -20,18 +28,19 @@ import {useThemeStore} from "@/store/modules/theme";
 import {useRouteStore} from '@/store/modules/route'
 
 defineOptions({
-  name:'GlobalContent'
+  name: 'GlobalContent'
 })
 
-interface Props{
-  showPadding?:boolean
+interface Props {
+  showPadding?: boolean
 }
-withDefaults(defineProps<Props>(),{
-  showPadding:false
+
+withDefaults(defineProps<Props>(), {
+  showPadding: false
 })
-const appStore=useAppStore()
-const themeStore=useThemeStore()
-const routeStore=useRouteStore()
+const appStore = useAppStore()
+const themeStore = useThemeStore()
+const routeStore = useRouteStore()
 </script>
 
 <style scoped>
