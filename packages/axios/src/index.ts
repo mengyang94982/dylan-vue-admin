@@ -1,176 +1,40 @@
-import axios, { AxiosError } from 'axios';
-import type { AxiosResponse, CancelTokenSource, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
-import axiosRetry from 'axios-retry';
-import { nanoid } from '@sa/utils';
-import { createAxiosConfig, createDefaultOptions, createRetryOptions } from './options';
-import { BACKEND_ERROR_CODE, REQUEST_ID_KEY } from './constant';
-import type {
-  CustomAxiosRequestConfig,
-  FlatRequestInstance,
-  MappedType,
-  RequestInstance,
-  RequestOption,
-  ResponseType
-} from './type';
+import type {CancelTokenSource, CreateAxiosDefaults, InternalAxiosRequestConfig} from "axios";
+import axios from "axios";
 
-function createCommonRequest<ResponseData = any>(
-  axiosConfig?: CreateAxiosDefaults,
-  options?: Partial<RequestOption<ResponseData>>
-) {
-  const opts = createDefaultOptions<ResponseData>(options);
+import axiosRetry from 'axios-retry'
 
-  const axiosConf = createAxiosConfig(axiosConfig);
-  const instance = axios.create(axiosConf);
+import {nanoid} from '@sa/utils'
 
-  const cancelTokenSourceMap = new Map<string, CancelTokenSource>();
+import {createAxiosConfig, createDefaultOptions, createRetryOptions} from './options';
+import {REQUEST_ID_KEY} from './constant';
+import type {RequestOption} from './type';
 
-  // config axios retry
-  const retryOptions = createRetryOptions(axiosConf);
-  axiosRetry(instance, retryOptions);
+function createCommonRequest<ResponseData = any>(axiosConfig?:CreateAxiosDefaults,options?:Partial<RequestOption<ResponseData>){
+  const opts=createDefaultOptions<ResponseData>(options)
+  const axiosConf=createAxiosConfig(axiosConfig)
+  const instance=axios.create(axiosConf)
+  const cancelTokenSourceMap=new Map<string,CancelTokenSource>()
 
-  instance.interceptors.request.use(conf => {
-    const config: InternalAxiosRequestConfig = { ...conf };
+  const retryOptions=createRetryOptions(axiosConf)
+  axiosRetry(instance,retryOptions)
+  instance.interceptors.request.use(conf=>{
+    const config:InternalAxiosRequestConfig={...conf}
+    const requestId=nanoid()
+    config.headers.set(REQUEST_ID_KEY,requestId)
+    const cancelTokenSource=axios.CancelToken.source()
 
-    // set request id
-    const requestId = nanoid();
-    config.headers.set(REQUEST_ID_KEY, requestId);
+    const cancelToken=cancelTokenSource.token
+    cancelTokenSourceMap.set(requestId,cancelTokenSource)
 
-    // config cancel token
-    const cancelTokenSource = axios.CancelToken.source();
-    config.cancelToken = cancelTokenSource.token;
-    cancelTokenSourceMap.set(requestId, cancelTokenSource);
-
-    // handle config by hook
-    const handledConfig = opts.onRequest?.(config) || config;
-
-    return handledConfig;
-  });
-
-  instance.interceptors.response.use(
-    async response => {
-      if (opts.isBackendSuccess(response)) {
-        return Promise.resolve(response);
-      }
-
-      const fail = await opts.onBackendFail(response, instance);
-      if (fail) {
-        return fail;
-      }
-
-      const backendError = new AxiosError<ResponseData>(
-        'the backend request error',
-        BACKEND_ERROR_CODE,
-        response.config,
-        response.request,
-        response
-      );
-
-      await opts.onError(backendError);
-
-      return Promise.reject(backendError);
-    },
-    async (error: AxiosError<ResponseData>) => {
-      await opts.onError(error);
-
-      return Promise.reject(error);
-    }
-  );
-
-  function cancelRequest(requestId: string) {
-    const cancelTokenSource = cancelTokenSourceMap.get(requestId);
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-      cancelTokenSourceMap.delete(requestId);
-    }
-  }
-
-  function cancelAllRequest() {
-    cancelTokenSourceMap.forEach(cancelTokenSource => {
-      cancelTokenSource.cancel();
-    });
-    cancelTokenSourceMap.clear();
-  }
-
-  return {
-    instance,
-    opts,
-    cancelRequest,
-    cancelAllRequest
-  };
+    return opts.onRequest?.(config) || config
+  })
 }
 
-/**
- * create a request instance
- *
- * @param axiosConfig axios config
- * @param options request options
- */
-export function createRequest<ResponseData = any>(
-  axiosConfig?: CreateAxiosDefaults,
-  options?: Partial<RequestOption<ResponseData>>
-) {
-  const { instance, opts, cancelRequest, cancelAllRequest } = createCommonRequest<ResponseData>(axiosConfig, options);
+export function createRequest(){
 
-  const request: RequestInstance = async function request<T = any, R extends ResponseType = 'json'>(
-    config: CustomAxiosRequestConfig
-  ) {
-    const response: AxiosResponse<ResponseData> = await instance(config);
-
-    const responseType = response.config?.responseType || 'json';
-
-    if (responseType === 'json') {
-      return opts.transformBackendResponse(response);
-    }
-
-    return response.data as MappedType<R, T>;
-  } as RequestInstance;
-
-  request.cancelRequest = cancelRequest;
-  request.cancelAllRequest = cancelAllRequest;
-
-  return request;
 }
 
-/**
- * create a flat request instance
- *
- * The response data is a flat object: { data: any, error: AxiosError }
- *
- * @param axiosConfig axios config
- * @param options request options
- */
-export function createFlatRequest<ResponseData = any>(
-  axiosConfig?: CreateAxiosDefaults,
-  options?: Partial<RequestOption<ResponseData>>
-) {
-  const { instance, opts, cancelRequest, cancelAllRequest } = createCommonRequest<ResponseData>(axiosConfig, options);
 
-  const flatRequest: FlatRequestInstance = async function flatRequest<T = any, R extends ResponseType = 'json'>(
-    config: CustomAxiosRequestConfig
-  ) {
-    try {
-      const response: AxiosResponse<ResponseData> = await instance(config);
+export function createFlatRequest(){
 
-      const responseType = response.config?.responseType || 'json';
-
-      if (responseType === 'json') {
-        const data = opts.transformBackendResponse(response);
-
-        return { data, error: null };
-      }
-
-      return { data: response.data as MappedType<R, T>, error: null };
-    } catch (error) {
-      return { data: null, error };
-    }
-  } as FlatRequestInstance;
-
-  flatRequest.cancelRequest = cancelRequest;
-  flatRequest.cancelAllRequest = cancelAllRequest;
-
-  return flatRequest;
 }
-
-export { BACKEND_ERROR_CODE, REQUEST_ID_KEY };
-export type * from './type';
-export type { CreateAxiosDefaults, AxiosError };
