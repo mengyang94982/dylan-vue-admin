@@ -36,7 +36,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  showPadding: false
+  showPadding: true
 })
 const appStore = useAppStore()
 const themeStore = useThemeStore()

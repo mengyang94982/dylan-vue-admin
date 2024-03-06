@@ -1,4 +1,4 @@
-import {BACKEND_ERROR_CODE, createFlatRequest, createRequest} from "@sa/axios";
+import {BACKEND_ERROR_CODE, createFlatRequest, createRequest} from "../axios/src";
 
 import {createProxyPattern, createServiceConfig} from "~/env.config";
 import {localStg} from "@/utils/storage";
@@ -26,7 +26,9 @@ export const request = createFlatRequest<App.Service.Response>(
       return config
     },
     isBackendSuccess(response){
-      return response.data.code === '0000'
+      console.log("=>(index.ts:46) response", response);
+      // return response.data.code === '0000'
+      return !!response.data.code
     },
     async onBackendFail(_response){
 
