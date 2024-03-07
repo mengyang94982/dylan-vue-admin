@@ -1,3 +1,44 @@
+<template>
+  <div class="flex h-full" @mouseleave="handleResetActiveMenu">
+    <FirstLevelMenu :active-menu-key="activeFirstLevelMenuKey" :inverted="siderInverted" @select="handleSelectMixMenu">
+      <slot></slot>
+    </FirstLevelMenu>
+    <div
+      class="relative h-full transition-width-300"
+      :style="{
+        width: appStore.mixSiderFixed ? themeStore.sider.mixChildMenuWidth + 'px' : '0px'
+      }"
+    >
+      <DarkModeContainer
+        class="absolute flex-vertical-stretch h-full nowrap-hidden transition-all-300 shadow-sm"
+        :inverted="siderInverted"
+        :style="{
+          width: showDrawer ? themeStore.sider.mixChildMenuWidth + 'px' : '0px'
+        }"
+      >
+        <header
+          class="flex-y-center justify-between"
+          :style="{
+            height: themeStore.header.height + 'px'
+          }"
+        >
+          <h2 class="text-primary pl-8px text-16px font-bold">
+            {{ $t('system.title') }}
+          </h2>
+          <PinToggler
+            :pin="appStore.mixSiderFixed"
+            :class="{
+              'text-white:88 !hover:text-white': siderInverted
+            }"
+            @click="appStore.toggleMixSiderFixed"
+          />
+        </header>
+        <BaseMenu :menus="menus" :dark-theme="siderInverted" />
+      </DarkModeContainer>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useBoolean } from '@sa/hooks';
@@ -40,40 +81,5 @@ function handleResetActiveMenu() {
   setDrawerVisible(false);
 }
 </script>
-
-<template>
-  <div class="flex h-full" @mouseleave="handleResetActiveMenu">
-    <FirstLevelMenu :active-menu-key="activeFirstLevelMenuKey" :inverted="siderInverted" @select="handleSelectMixMenu">
-      <slot></slot>
-    </FirstLevelMenu>
-    <div
-class='relative h-full transition-width-300' :style='{
-        width: appStore.mixSiderFixed ? themeStore.sider.mixChildMenuWidth + 'px' : '0px'
-      }"
-    >
-      <DarkModeContainer
-class='absolute-lt flex-vertical-stretch h-full nowrap-hidden transition-all-300 shadow-sm' :inverted='siderInverted' :style='{
-          width: showDrawer ? themeStore.sider.mixChildMenuWidth + 'px' : '0px'
-        }"
-      >
-        <header
-class='flex-y-center justify-between' :style='{
-            height: themeStore.header.height + 'px'
-          }"
-        >
-          <h2 class="text-primary pl-8px text-16px font-bold">
-            {{ $t('system.title') }}
-          </h2>
-          <PinToggler
-:pin='appStore.mixSiderFixed' :class='{
-              'text-white:88 !hover:text-bold': sider-inverted
-            }"
-          />
-        </header>
-        <BaseMenu :dark-theme="sidernvrted" :menus="menus" />
-      </DarkModeContainer>
-    </div>
-  </div>
-</template>
 
 <style scoped></style>

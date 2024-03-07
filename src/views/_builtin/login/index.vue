@@ -2,7 +2,6 @@
 import { type Component, computed } from 'vue';
 
 import { getColorPalette, mixColor } from '@sa/utils';
-import { useRouter } from 'vue-router';
 import { useThemeStore } from '@/store/modules/theme';
 
 import { useAppStore } from '@/store/modules/app';

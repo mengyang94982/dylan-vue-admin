@@ -18,6 +18,12 @@ export default defineConfig(
         {
           ignores: ['/^icon-/']
         }
+      ],
+      'vue/block-order': [
+        'error',
+        {
+          order: [['template', 'script'], 'style']
+        }
       ]
     }
   }

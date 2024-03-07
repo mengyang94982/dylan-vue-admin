@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import HeaderBanner from '@/views/home/modules/header-banner.vue';
-import CardData from '@/views/home/modules/card-data.vue';
-</script>
-
 <template>
   <NSpace vertical :size="16">
     <HeaderBanner />
@@ -19,7 +14,20 @@ import CardData from '@/views/home/modules/card-data.vue';
         </NCard>
       </NGi>
     </NGrid>
+    <NGrid></NGrid>
   </NSpace>
 </template>
+
+<script setup lang="ts">
+import HeaderBanner from "@/views/home/modules/header-banner.vue";
+import CardData from "@/views/home/modules/card-data.vue";
+import LineChart from "./modules/line-chart.vue";
+import PieChart from "./modules/pie-chart.vue";
+import { useAppStore } from "@/store/modules/app";
+import { computed } from "vue";
+
+const appStore = useAppStore();
+const gap = computed(() => (appStore.isMobile ? 0 : 16));
+</script>
 
 <style scoped></style>

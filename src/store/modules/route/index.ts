@@ -253,8 +253,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     if (authRouteMode.value === 'static') {
       const { authRoutes } = createRoutes();
-      console.log('=>(index.ts:256) authRoutes', authRoutes);
-
       return isRouteExistByRouteName(routeName, authRoutes);
     }
 
