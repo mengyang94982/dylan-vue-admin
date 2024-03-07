@@ -1,24 +1,3 @@
-<template>
-  <NDivider>{{ $t('theme.themeColor.title') }}</NDivider>
-  <div class="flex-vertical-stretch gap-12px">
-    <SettingItem v-for="(_, key) in themeStore.themeColors" :key="key" :label="$t(`theme.themeColor.${key}`)">
-      <template v-if="key === 'info'" #suffix>
-        <NCheckbox v-model:checked="themeStore.isInfoFollowPrimary">
-          {{ $t('theme.themeColor.followPrimary') }}
-        </NCheckbox>
-      </template>
-      <NColorPicker
-        class="w-90px"
-        :value="themeStore.themeColors[key]"
-        :disabled="key === 'info' && themeStore.isInfoFollowPrimary"
-        :show-alpha="false"
-        :swatches="swatches"
-        @update:value="handleUpdateColor($event, key)"
-      />
-    </SettingItem>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useThemeStore } from '@/store/modules/theme';
 import { $t } from '@/locales';
@@ -53,5 +32,26 @@ const swatches: string[] = [
   '#10b981'
 ];
 </script>
+
+<template>
+  <NDivider>{{ $t('theme.themeColor.title') }}</NDivider>
+  <div class="flex-vertical-stretch gap-12px">
+    <SettingItem v-for="(_, key) in themeStore.themeColors" :key="key" :label="$t(`theme.themeColor.${key}`)">
+      <template v-if="key === 'info'" #suffix>
+        <NCheckbox v-model:checked="themeStore.isInfoFollowPrimary">
+          {{ $t('theme.themeColor.followPrimary') }}
+        </NCheckbox>
+      </template>
+      <NColorPicker
+        class="w-90px"
+        :value="themeStore.themeColors[key]"
+        :disabled="key === 'info' && themeStore.isInfoFollowPrimary"
+        :show-alpha="false"
+        :swatches="swatches"
+        @update:value="handleUpdateColor($event, key)"
+      />
+    </SettingItem>
+  </div>
+</template>
 
 <style scoped></style>

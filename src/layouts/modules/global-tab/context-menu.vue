@@ -1,55 +1,39 @@
-<template>
-  <NDropdown
-    :show='visible'
-    placement='bottom-start'
-    trigger='manual'
-    :x='x'
-    :y='y'
-    :options='options'
-    @clickoutside='hideDropdown'
-    @select='handleDropdown'
-  />
-</template>
-
-<script
-  setup
-  lang="ts"
->
-import {computed} from "vue";
-import type {VNode} from 'vue'
-import {useSvgIconRender} from '@sa/hooks'
-import {$t} from '@/locales'
-import {useTabStore} from "@/store/modules/tab";
-import SvgIcon from "@/components/custom/svg-icon.vue";
+<script setup lang="ts">
+import { computed } from 'vue';
+import type { VNode } from 'vue';
+import { useSvgIconRender } from '@sa/hooks';
+import { $t } from '@/locales';
+import { useTabStore } from '@/store/modules/tab';
+import SvgIcon from '@/components/custom/svg-icon.vue';
 
 defineOptions({
-  name:'ContextMenu'
-})
+  name: 'ContextMenu'
+});
 
-interface Props{
-  x:number
-  y:number
-  tabId:string
-  excludeKeys?:App.Global.DropdownKey[]
-  disabledKeys?:App.Global.DropdownKey[]
+interface Props {
+  x: number;
+  y: number;
+  tabId: string;
+  excludeKeys?: App.Global.DropdownKey[];
+  disabledKeys?: App.Global.DropdownKey[];
 }
 
-const props=withDefaults(defineProps<Props>(),{
-  excludeKeys:()=>[],
-  disabledKeys:()=>[]
-})
+const props = withDefaults(defineProps<Props>(), {
+  excludeKeys: () => [],
+  disabledKeys: () => []
+});
 
-const visible=defineModel<boolean>('visible')
+const visible = defineModel<boolean>('visible');
 
-const {removeTab,clearTabs,clearLeftTabs,clearRightTabs}=useTabStore()
-const {SvgIconVNode}=useSvgIconRender(SvgIcon)
+const { removeTab, clearTabs, clearLeftTabs, clearRightTabs } = useTabStore();
+const { SvgIconVNode } = useSvgIconRender(SvgIcon);
 
-type DropdownOption={
-  key:App.Global.DropdownKey
-  label:string
-  icon?:()=>VNode
-  disabled?:boolean
-}
+type DropdownOption = {
+  key: App.Global.DropdownKey;
+  label: string;
+  icon?: () => VNode;
+  disabled?: boolean;
+};
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
@@ -94,8 +78,8 @@ const options = computed(() => {
   return result;
 });
 
-function hideDropdown () {
-  visible.value =false
+function hideDropdown() {
+  visible.value = false;
 }
 
 const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
@@ -120,9 +104,19 @@ function handleDropdown(optionKey: App.Global.DropdownKey) {
   dropdownAction[optionKey]?.();
   hideDropdown();
 }
-
 </script>
 
-<style scoped>
+<template>
+  <NDropdown
+    :show="visible"
+    placement="bottom-start"
+    trigger="manual"
+    :x="x"
+    :y="y"
+    :options="options"
+    @clickoutside="hideDropdown"
+    @select="handleDropdown"
+  />
+</template>
 
-</style>
+<style scoped></style>

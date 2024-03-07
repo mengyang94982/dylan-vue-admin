@@ -1,13 +1,13 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from 'vue';
 
-import { useRoute } from "vue-router";
-import { useContext } from "@sa/hooks";
-import { useRouteStore } from "@/store/modules/route";
+import { useRoute } from 'vue-router';
+import { useContext } from '@sa/hooks';
+import { useRouteStore } from '@/store/modules/route';
 
 export function useMixMenu() {
   const route = useRoute();
   const routeStore = useRouteStore();
-  const activeFirstLevelMenuKey = ref("");
+  const activeFirstLevelMenuKey = ref('');
 
   function setActiveFirstLevelMenuKey(key: string) {
     activeFirstLevelMenuKey.value = key;
@@ -17,15 +17,12 @@ export function useMixMenu() {
     const { hideInMenu, activeMenu } = route.meta;
     const name = route.name as string;
     const routeName = (hideInMenu ? activeMenu : name) || name;
-    const [firstLevelRouteName] = routeName.split("_");
+    const [firstLevelRouteName] = routeName.split('_');
     setActiveFirstLevelMenuKey(firstLevelRouteName);
   }
 
   const menus = computed(
-    () =>
-      routeStore.menus.find(
-        (menu) => menu.key === activeFirstLevelMenuKey.value,
-      )?.children || [],
+    () => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || []
   );
 
   watch(
@@ -34,16 +31,15 @@ export function useMixMenu() {
       getActiveFirstLevelMenuKey();
     },
     {
-      immediate: true,
-    },
+      immediate: true
+    }
   );
   return {
     activeFirstLevelMenuKey,
     setActiveFirstLevelMenuKey,
     getActiveFirstLevelMenuKey,
-    menus,
+    menus
   };
 }
 
-export const { setupStore: setupMixMenuContext, useStore: useMixMenuContext } =
-  useContext("mix-menu", useMixMenu);
+export const { setupStore: setupMixMenuContext, useStore: useMixMenuContext } = useContext('mix-menu', useMixMenu);

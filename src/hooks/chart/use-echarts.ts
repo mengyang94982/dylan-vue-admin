@@ -75,7 +75,6 @@ interface ChartHooks {
 }
 
 /**
- *
  * @param optionsFactory
  * @param hooks
  */

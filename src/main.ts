@@ -1,15 +1,10 @@
-import { createApp } from "vue";
-import "./plugins/assets";
-import {
-  setupDayjs,
-  setupLoading,
-  setupNProgress,
-  setupIconifyOffline,
-} from "./plugins";
-import { setupStore } from "@/store";
-import {setupRouter} from "@/router";
-import { setupI18n } from "@/locales";
-import App from "./App.vue";
+import { createApp } from 'vue';
+import './plugins/assets';
+import { setupStore } from '@/store';
+import { setupRouter } from '@/router';
+import { setupI18n } from '@/locales';
+import { setupDayjs, setupIconifyOffline, setupLoading, setupNProgress } from './plugins';
+import App from './App.vue';
 
 async function setupApp() {
   setupLoading();

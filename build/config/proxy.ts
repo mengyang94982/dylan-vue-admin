@@ -8,7 +8,6 @@ import { createProxyPattern, createServiceConfig } from '../../env.config';
  */
 export function createViteProxy(env: Env.ImportMeta) {
   const isEnableHttpProxy = env.VITE_HTTP_PROXY === 'Y';
-  console.log("=>(proxy.ts:11) isEnableHttpProxy", isEnableHttpProxy);
 
   if (!isEnableHttpProxy) return undefined;
 
@@ -35,7 +34,5 @@ export function createViteProxy(env: Env.ImportMeta) {
       rewrite: path => path.replace(new RegExp(`^${proxyPattern}`), '')
     };
   }
-  console.log("=>(proxy.ts:39) proxy", proxy);
-
   return proxy;
 }

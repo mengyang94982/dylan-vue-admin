@@ -1,28 +1,3 @@
-<template>
-  <NDivider>{{ $t('theme.themeSchema.title') }}</NDivider>
-  <div class="flex-vertical-stretch gap-16px">
-    <div class="i-flex-center">
-      <NTabs
-        :key="themeStore.themeScheme"
-        type="segment"
-        size="small"
-        class="relative w-214px"
-        :value="themeStore.themeScheme"
-        @update:value="handleSegmentChange"
-      >
-        <NTab v-for="(_, key) in themeSchemaRecord" :key="key" :name="key">
-          <SvgIcon :icon="icons[key]" class="h-23px text-icon-small" />
-        </NTab>
-      </NTabs>
-    </div>
-    <Transition name="sider-inverted">
-      <SettingItem v-if="showSiderInverted" :label="$t('theme.sider.inverted')">
-        <NSwitch v-model:value="themeStore.sider.inverted" />
-      </SettingItem>
-    </Transition>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { themeSchemaRecord } from '@/constants/app';
@@ -49,7 +24,30 @@ function handleSegmentChange(value: string | number) {
 const showSiderInverted = computed(() => !themeStore.darkMode && themeStore.layout.mode.includes('vertical'));
 </script>
 
-
+<template>
+  <NDivider>{{ $t('theme.themeSchema.title') }}</NDivider>
+  <div class="flex-vertical-stretch gap-16px">
+    <div class="i-flex-center">
+      <NTabs
+        :key="themeStore.themeScheme"
+        type="segment"
+        size="small"
+        class="relative w-214px"
+        :value="themeStore.themeScheme"
+        @update:value="handleSegmentChange"
+      >
+        <NTab v-for="(_, key) in themeSchemaRecord" :key="key" :name="key">
+          <SvgIcon :icon="icons[key]" class="h-23px text-icon-small" />
+        </NTab>
+      </NTabs>
+    </div>
+    <Transition name="sider-inverted">
+      <SettingItem v-if="showSiderInverted" :label="$t('theme.sider.inverted')">
+        <NSwitch v-model:value="themeStore.sider.inverted" />
+      </SettingItem>
+    </Transition>
+  </div>
+</template>
 
 <style scoped>
 .sider-inverted-enter-active {

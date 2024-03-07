@@ -1,11 +1,10 @@
-import {BACKEND_ERROR_CODE, createFlatRequest, createRequest} from "../axios/src";
+import { createProxyPattern, createServiceConfig } from '~/env.config';
+import { localStg } from '@/utils/storage';
+import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '../axios/src';
 
-import {createProxyPattern, createServiceConfig} from "~/env.config";
-import {localStg} from "@/utils/storage";
+const { baseURL, otherBaseURL } = createServiceConfig(import.meta.env);
 
-const {baseURL, otherBaseURL} = createServiceConfig(import.meta.env)
-
-const isHttpProxy = import.meta.env.VITE_HTTP_PROXY === 'Y'
+const isHttpProxy = import.meta.env.VITE_HTTP_PROXY === 'Y';
 
 export const request = createFlatRequest<App.Service.Response>(
   {
@@ -15,43 +14,40 @@ export const request = createFlatRequest<App.Service.Response>(
     }
   },
   {
-    async onRequest(config){
-      const {headers}=config
+    async onRequest(config) {
+      const { headers } = config;
 
       // set token
-      const token=localStg.get('token')
-      const Authorization=token?`Bearer ${token}`:null
-      Object.assign(headers,{Authorization})
+      const token = localStg.get('token');
+      const Authorization = token ? `Bearer ${token}` : null;
+      Object.assign(headers, { Authorization });
 
-      return config
+      return config;
     },
-    isBackendSuccess(response){
-      console.log("=>(index.ts:46) response", response);
+    isBackendSuccess(response) {
       // return response.data.code === '0000'
-      return !!response.data.code
+      return Boolean(response.data.code);
     },
-    async onBackendFail(_response){
-
-    },
+    async onBackendFail(_response) {},
     transformBackendResponse(response) {
-      return response.data.data
+      return response.data.data;
     },
-    onError(error){
-      let message=error.message
+    onError(error) {
+      let message = error.message;
       if (error.code === BACKEND_ERROR_CODE) {
-        message=error.response?.data?.msg || message
+        message = error.response?.data?.msg || message;
       }
-      window.$message?.error(message)
+      window.$message?.error(message);
     }
   }
-)
+);
 
-export const demoRequest=createRequest<App.Service.DemoResponse>(
+export const demoRequest = createRequest<App.Service.DemoResponse>(
   {
-    baseURL:isHttpProxy?createProxyPattern('demo'):otherBaseURL.demo
+    baseURL: isHttpProxy ? createProxyPattern('demo') : otherBaseURL.demo
   },
   {
-    async onRequest(config){
+    async onRequest(config) {
       const { headers } = config;
 
       // set token
@@ -86,4 +82,4 @@ export const demoRequest=createRequest<App.Service.DemoResponse>(
       window.$message?.error(message);
     }
   }
-)
+);

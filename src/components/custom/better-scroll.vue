@@ -1,23 +1,12 @@
-<template>
-  <div ref='bsWrap' class='h-full text-left'>
-    <div ref='bsContent' class='inline-block' :class='{"h-full":!isScrollY}'>
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
-<script
-  setup
-  lang="ts"
->
-import {computed,onMounted,ref,watch} from "vue";
-import {useElementSize} from "@vueuse/core";
-import BScroll from '@better-scroll/core'
-import type {Options} from '@better-scroll/core'
+<script setup lang="ts">
+import { computed, onMounted, ref, watch } from 'vue';
+import { useElementSize } from '@vueuse/core';
+import BScroll from '@better-scroll/core';
+import type { Options } from '@better-scroll/core';
 
 defineOptions({
-  name:'BetterScroll'
-})
+  name: 'BetterScroll'
+});
 
 interface Props {
   /**
@@ -52,9 +41,14 @@ onMounted(() => {
 });
 
 defineExpose({ instance });
-
 </script>
 
-<style scoped>
+<template>
+  <div ref="bsWrap" class="h-full text-left">
+    <div ref="bsContent" class="inline-block" :class="{ 'h-full': !isScrollY }">
+      <slot></slot>
+    </div>
+  </div>
+</template>
 
-</style>
+<style scoped></style>
