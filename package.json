@@ -13,13 +13,21 @@
   "bugs": {
     "url": "https://github.com/mengyang94982/vue-admin/issues"
   },
-  "keywords": ["Vue3 admin", "vue-admin-template", "Vite5", "TypeScript", "naive-ui", "naive-ui-admin", "UnoCSS"],
+  "keywords": [
+    "Vue3 admin",
+    "vue-admin-template",
+    "Vite5",
+    "TypeScript",
+    "naive-ui",
+    "naive-ui-admin",
+    "UnoCSS"
+  ],
   "scripts": {
     "build": "cross-env VITE_SERVICE_ENV=prod vite build",
     "build:dev": "vite build",
     "build:test": "cross-env VITE_SERVICE_ENV=test vite build",
     "cleanup": "sa cleanup",
-    "commit": "sa git-commit",
+    "cm": "git add . && sa git-commit",
     "dev": "vite",
     "dev:prod": "cross-env VITE_SERVICE_ENV=prod vite",
     "dev:test": "cross-env VITE_SERVICE_ENV=test vite",
@@ -84,5 +92,6 @@
     "vite-plugin-vue-devtools": "7.0.15",
     "vue-eslint-parser": "9.4.2",
     "vue-tsc": "1.8.27"
-  }
+  },
+  "website": "https://mengyang.online"
 }
