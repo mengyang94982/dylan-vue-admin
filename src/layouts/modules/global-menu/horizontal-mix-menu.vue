@@ -1,3 +1,9 @@
+<template>
+  <FirstLevelMenu :active-menu-key="activeFirstLevelMenuKey" @select="handleSelectMixMenu">
+    <slot></slot>
+  </FirstLevelMenu>
+</template>
+
 <script setup lang="ts">
 import { useRouterPush } from '@/hooks/common/router';
 import { useMixMenuContext } from '@/layouts/hooks/use-mix-menu';
@@ -18,11 +24,5 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
   }
 }
 </script>
-
-<template>
-  <FirstLevelMenu :active-menu-key="activeFirstLevelMenuKey" @select="handleSelectMixMenu">
-    <slot></slot>
-  </FirstLevelMenu>
-</template>
 
 <style scoped></style>

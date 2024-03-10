@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { $t } from '@/locales';
-import { useRouterPush } from '@/hooks/common/router';
-
-defineOptions({
-  name: 'RegisterLogin'
-});
-
-const { toggleLoginModule } = useRouterPush();
-</script>
-
 <template>
   <NForm size="large" :show-label="false">
     <NFormItem>
@@ -27,5 +16,16 @@ const { toggleLoginModule } = useRouterPush();
     </NSpace>
   </NForm>
 </template>
+
+<script setup lang="ts">
+import { $t } from '@/locales';
+import { useRouterPush } from '@/hooks/common/router';
+
+defineOptions({
+  name: 'RegisterLogin'
+});
+
+const { toggleLoginModule } = useRouterPush();
+</script>
 
 <style scoped></style>

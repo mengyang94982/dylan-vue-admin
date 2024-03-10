@@ -1,3 +1,9 @@
+<template>
+  <NCard :bordered="false" class="card-wrapper">
+    <div ref="domRef" class="h-360px overflow-hidden"></div>
+  </NCard>
+</template>
+
 <script setup lang="ts">
 import { watch } from 'vue';
 import { $t } from '@/locales';
@@ -99,11 +105,5 @@ watch(
 // init
 init();
 </script>
-
-<template>
-  <NCard :bordered="false" class="card-wrapper">
-    <div ref="domRef" class="h-360px overflow-hidden"></div>
-  </NCard>
-</template>
 
 <style scoped></style>

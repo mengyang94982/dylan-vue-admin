@@ -1,17 +1,3 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-import { getColorPalette } from '@sa/utils';
-defineOptions({
-  name: 'WaveBg'
-});
-interface Props {
-  themeColor: string;
-}
-const props = defineProps<Props>();
-const lightColor = computed(() => getColorPalette(props.themeColor, 3));
-const darkColor = computed(() => getColorPalette(props.themeColor, 6));
-</script>
-
 <template>
   <div class="absolute-lt z-1 wh-full overflow-hidden">
     <div class="absolute -right-300px -top-900px <sm:(-right-100px-top-1170px)">
@@ -54,5 +40,19 @@ const darkColor = computed(() => getColorPalette(props.themeColor, 6));
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { getColorPalette } from '@sa/utils';
+defineOptions({
+  name: 'WaveBg'
+});
+interface Props {
+  themeColor: string;
+}
+const props = defineProps<Props>();
+const lightColor = computed(() => getColorPalette(props.themeColor, 3));
+const darkColor = computed(() => getColorPalette(props.themeColor, 6));
+</script>
 
 <style scoped></style>

@@ -1,9 +1,3 @@
-<script setup lang="ts">
-defineOptions({
-  name: 'ChromeTabBg'
-});
-</script>
-
 <template>
   <svg class="wh-full">
     <defs>
@@ -27,5 +21,11 @@ defineOptions({
     </g>
   </svg>
 </template>
+
+<script setup lang="ts">
+defineOptions({
+  name: 'ChromeTabBg'
+});
+</script>
 
 <style scoped></style>

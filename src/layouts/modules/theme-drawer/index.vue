@@ -1,3 +1,17 @@
+<template>
+  <NDrawer v-model:show="appStore.themeDrawerVisible" display-directive="show" :width="360">
+    <NDrawerContent :title="$t('theme.themeDrawerTitle')" :native-scrollbar="false" closable>
+      <DarkMode />
+      <LayoutMode />
+      <ThemeColor />
+      <PageFun />
+      <template #footer>
+        <ConfigOperation />
+      </template>
+    </NDrawerContent>
+  </NDrawer>
+</template>
+
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
@@ -13,19 +27,5 @@ defineOptions({
 
 const appStore = useAppStore();
 </script>
-
-<template>
-  <NDrawer v-model:show="appStore.themeDrawerVisible" display-directive="show" :width="360">
-    <NDrawerContent :title="$t('theme.themeDrawerTitle')" :native-scrollbar="false" closable>
-      <DarkMode />
-      <LayoutMode />
-      <ThemeColor />
-      <PageFun />
-      <template #footer>
-        <ConfigOperation />
-      </template>
-    </NDrawerContent>
-  </NDrawer>
-</template>
 
 <style scoped></style>

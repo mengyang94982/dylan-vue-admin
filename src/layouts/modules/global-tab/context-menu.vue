@@ -1,3 +1,16 @@
+<template>
+  <NDropdown
+    :show="visible"
+    placement="bottom-start"
+    trigger="manual"
+    :x="x"
+    :y="y"
+    :options="options"
+    @clickoutside="hideDropdown"
+    @select="handleDropdown"
+  />
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { VNode } from 'vue';
@@ -105,18 +118,5 @@ function handleDropdown(optionKey: App.Global.DropdownKey) {
   hideDropdown();
 }
 </script>
-
-<template>
-  <NDropdown
-    :show="visible"
-    placement="bottom-start"
-    trigger="manual"
-    :x="x"
-    :y="y"
-    :options="options"
-    @clickoutside="hideDropdown"
-    @select="handleDropdown"
-  />
-</template>
 
 <style scoped></style>

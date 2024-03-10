@@ -1,3 +1,25 @@
+<template>
+  <DarkModeContainer class="flex-y-center h-full shadow-header">
+    <GlobalLogo v-if="showLogo" class="h-full" :style="{ width: themeStore.sider.width + 'px' }" />
+    <HorizontalMenu v-if="showMenu" mode="horizontal" :menus="headerMenus" class="px-12px" />
+    <div v-else class="flex-1-hidden flex-y-center h-full">
+      <MenuToggler v-if="showMenuToggler" :collapsed="appStore.siderCollapse" @click="appStore.toggleSiderCollapse" />
+      <GlobalBreadcrumb v-if="!appStore.isMobile" class="ml-12px" />
+    </div>
+    <div class="flex-y-center justify-end h-full">
+      <FullScreen v-if="!appStore.isMobile" :full="isFullscreen" @click="toggle" />
+      <LangSwitch :lang="appStore.locale" :lang-options="appStore.localeOptions" @change-lang="appStore.changeLocale" />
+      <ThemeSchemeSwitch
+        :theme-schema="themeStore.themeScheme"
+        :is-dark="themeStore.darkMode"
+        @switch="themeStore.toggleThemeScheme"
+      />
+      <ThemeButton />
+      <UserAvatar />
+    </div>
+  </DarkModeContainer>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useFullscreen } from '@vueuse/core';
@@ -40,27 +62,5 @@ const headerMenus = computed(() => {
   return [];
 });
 </script>
-
-<template>
-  <DarkModeContainer class="flex-y-center h-full shadow-header">
-    <GlobalLogo v-if="showLogo" class="h-full" :style="{ width: themeStore.sider.width + 'px' }" />
-    <HorizontalMenu v-if="showMenu" mode="horizontal" :menus="headerMenus" class="px-12px" />
-    <div v-else class="flex-1-hidden flex-y-center h-full">
-      <MenuToggler v-if="showMenuToggler" :collapsed="appStore.siderCollapse" @click="appStore.toggleSiderCollapse" />
-      <GlobalBreadcrumb v-if="!appStore.isMobile" class="ml-12px" />
-    </div>
-    <div class="flex-y-center justify-end h-full">
-      <FullScreen v-if="!appStore.isMobile" :full="isFullscreen" @click="toggle" />
-      <LangSwitch :lang="appStore.locale" :lang-options="appStore.localeOptions" @change-lang="appStore.changeLocale" />
-      <ThemeSchemeSwitch
-        :theme-schema="themeStore.themeScheme"
-        :is-dark="themeStore.darkMode"
-        @switch="themeStore.toggleThemeScheme"
-      />
-      <ThemeButton />
-      <UserAvatar />
-    </div>
-  </DarkModeContainer>
-</template>
 
 <style scoped></style>

@@ -1,3 +1,27 @@
+<template>
+  <div class="flex-center flex-wrap gap-x-32px gap-y-16px">
+    <div
+      v-for="(item, key) in layoutConfig"
+      :key="key"
+      class="flex border-2px rounded-6px cursor-pointer hover:border-primary"
+      :class="[mode === key ? 'border-primary' : 'border-transparent']"
+      @click="handleChangeMode(key)"
+    >
+      <NTooltip :placement="item.placement">
+        <template #trigger>
+          <div
+            class="gap-6px w-96px h-64px p-6px rd-4px shadow dark:shadow-coolGray-5"
+            :class="[key.includes('vertical') ? 'flex' : 'flex-vertical']"
+          >
+            <slot :name="key"></slot>
+          </div>
+        </template>
+        {{ $t(themeLayoutModeRecord[key]) }}
+      </NTooltip>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import type { PopoverPlacement } from 'naive-ui';
 import { themeLayoutModeRecord } from '@/constants/app';
@@ -66,29 +90,5 @@ function handleChangeMode(mode: UnionKey.ThemeLayoutMode) {
   emit('update:mode', mode);
 }
 </script>
-
-<template>
-  <div class="flex-center flex-wrap gap-x-32px gap-y-16px">
-    <div
-      v-for="(item, key) in layoutConfig"
-      :key="key"
-      class="flex border-2px rounded-6px cursor-pointer hover:border-primary"
-      :class="[mode === key ? 'border-primary' : 'border-transparent']"
-      @click="handleChangeMode(key)"
-    >
-      <NTooltip :placement="item.placement">
-        <template #trigger>
-          <div
-            class="gap-6px w-96px h-64px p-6px rd-4px shadow dark:shadow-coolGray-5"
-            :class="[key.includes('vertical') ? 'flex' : 'flex-vertical']"
-          >
-            <slot :name="key"></slot>
-          </div>
-        </template>
-        {{ $t(themeLayoutModeRecord[key]) }}
-      </NTooltip>
-    </div>
-  </div>
-</template>
 
 <style scoped></style>

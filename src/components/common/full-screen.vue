@@ -1,3 +1,10 @@
+<template>
+  <ButtonIcon :key="String(full)" :tooltip-content="full ? $t('icon.fullscreenExit') : $t('icon.fullscreen')">
+    <IconGridiconsFullscreenExit v-if="full" />
+    <IconGridiconsFullscreen v-else />
+  </ButtonIcon>
+</template>
+
 <script setup lang="ts">
 import { $t } from '@/locales';
 
@@ -11,12 +18,5 @@ interface Props {
 
 defineProps<Props>();
 </script>
-
-<template>
-  <ButtonIcon :key="String(full)" :tooltip-content="full ? $t('icon.fullscreenExit') : $t('icon.fullscreen')">
-    <IconGridiconsFullscreenExit v-if="full" />
-    <IconGridiconsFullscreen v-else />
-  </ButtonIcon>
-</template>
 
 <style scoped></style>

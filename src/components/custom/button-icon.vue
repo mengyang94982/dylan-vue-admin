@@ -1,3 +1,30 @@
+<template>
+  <DefineButton v-slot="{ $slots, className }">
+    <NButton quaternary :class="className">
+      <div class="flex-center gap-8px">
+        <component :is="$slots.default" />
+      </div>
+    </NButton>
+  </DefineButton>
+
+  <NTooltip v-if="tooltipContent" :placement="tooltipPlacement" :z-index="98">
+    <template #trigger>
+      <Button :class-name="cls" v-bind="$attrs">
+        <slot>
+          <SvgIcon :icon="icon" />
+        </slot>
+      </Button>
+    </template>
+    {{ tooltipContent }}
+  </NTooltip>
+
+  <Button v-else :class-name="cls" v-bind="$attrs">
+    <slot>
+      <SvgIcon :icon="icon" />
+    </slot>
+  </Button>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { createReusableTemplate } from '@vueuse/core';
@@ -40,32 +67,5 @@ const cls = computed(() => {
   return clsStr;
 });
 </script>
-
-<template>
-  <DefineButton v-slot="{ $slots, className }">
-    <NButton quaternary :class="className">
-      <div class="flex-center gap-8px">
-        <component :is="$slots.default" />
-      </div>
-    </NButton>
-  </DefineButton>
-
-  <NTooltip v-if="tooltipContent" :placement="tooltipPlacement" :z-index="98">
-    <template #trigger>
-      <Button :class-name="cls" v-bind="$attrs">
-        <slot>
-          <SvgIcon :icon="icon" />
-        </slot>
-      </Button>
-    </template>
-    {{ tooltipContent }}
-  </NTooltip>
-
-  <Button v-else :class-name="cls" v-bind="$attrs">
-    <slot>
-      <SvgIcon :icon="icon" />
-    </slot>
-  </Button>
-</template>
 
 <style scoped></style>

@@ -1,3 +1,13 @@
+<template>
+  <div class="flex justify-between w-full">
+    <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0 -z-1" />
+    <NButton type="error" ghost @click="handleReset">{{ $t('theme.configOperation.resetConfig') }}</NButton>
+    <div ref="domRef" data-clipboard-target="#themeConfigCopyTarget">
+      <NButton type="primary">{{ $t('theme.configOperation.copyConfig') }}</NButton>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import Clipboard from 'clipboard';
@@ -44,15 +54,5 @@ onMounted(() => {
   initClipboard();
 });
 </script>
-
-<template>
-  <div class="flex justify-between w-full">
-    <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0 -z-1" />
-    <NButton type="error" ghost @click="handleReset">{{ $t('theme.configOperation.resetConfig') }}</NButton>
-    <div ref="domRef" data-clipboard-target="#themeConfigCopyTarget">
-      <NButton type="primary">{{ $t('theme.configOperation.copyConfig') }}</NButton>
-    </div>
-  </div>
-</template>
 
 <style scoped></style>

@@ -1,3 +1,46 @@
+<template>
+  <DarkModeContainer class="flex-y-center wh-full px-16px shadow-tab">
+    <div ref="bsWrapper" class="flex-1-hidden h-full">
+      <BetterScroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: appStore.isMobile }">
+        <div
+          ref="tabRef"
+          class="flex h-full pr-18px"
+          :class="[themeStore.tab.mode === 'chrome' ? 'items-end' : 'items-center gap-12px']"
+        >
+          <PageTab
+            v-for="tab in tabStore.tabs"
+            :key="tab.id"
+            :[TAB_DATA_ID]="tab.id"
+            :mode="themeStore.tab.mode"
+            :dark-mode="themeStore.darkMode"
+            :active="tab.id === tabStore.activeTabId"
+            :active-color="themeStore.themeColor"
+            :closable="!tabStore.isTabRetain(tab.id)"
+            @click="tabStore.switchRouteByTab(tab)"
+            @close="handleCloseTab(tab)"
+            @contextmenu="handleContextMenu($event, tab.id)"
+          >
+            <template #prefix>
+              <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
+            </template>
+            <span>{{ tab.label }}</span>
+          </PageTab>
+        </div>
+      </BetterScroll>
+    </div>
+    <ReloadButton :loading="!appStore.reloadFlag" @click="refresh" />
+    <FullScreen :full="appStore.fullContent" @click="appStore.toggleFullContent" />
+  </DarkModeContainer>
+  <ContextMenu
+    :visible="dropdown.visible"
+    :tab-id="dropdown.tabId"
+    :disabled-keys="getContextMenuDisabledKeys(dropdown.tabId)"
+    :x="dropdown.x"
+    :y="dropdown.y"
+    @update:visible="handleDropdownVisible"
+  ></ContextMenu>
+</template>
+
 <script setup lang="ts">
 import { nextTick, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -157,48 +200,5 @@ watch(
 // init
 init();
 </script>
-
-<template>
-  <DarkModeContainer class="flex-y-center wh-full px-16px shadow-tab">
-    <div ref="bsWrapper" class="flex-1-hidden h-full">
-      <BetterScroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: appStore.isMobile }">
-        <div
-          ref="tabRef"
-          class="flex h-full pr-18px"
-          :class="[themeStore.tab.mode === 'chrome' ? 'items-end' : 'items-center gap-12px']"
-        >
-          <PageTab
-            v-for="tab in tabStore.tabs"
-            :key="tab.id"
-            :[TAB_DATA_ID]="tab.id"
-            :mode="themeStore.tab.mode"
-            :dark-mode="themeStore.darkMode"
-            :active="tab.id === tabStore.activeTabId"
-            :active-color="themeStore.themeColor"
-            :closable="!tabStore.isTabRetain(tab.id)"
-            @click="tabStore.switchRouteByTab(tab)"
-            @close="handleCloseTab(tab)"
-            @contextmenu="handleContextMenu($event, tab.id)"
-          >
-            <template #prefix>
-              <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
-            </template>
-            <span>{{ tab.label }}</span>
-          </PageTab>
-        </div>
-      </BetterScroll>
-    </div>
-    <ReloadButton :loading="!appStore.reloadFlag" @click="refresh" />
-    <FullScreen :full="appStore.fullContent" @click="appStore.toggleFullContent" />
-  </DarkModeContainer>
-  <ContextMenu
-    :visible="dropdown.visible"
-    :tab-id="dropdown.tabId"
-    :disabled-keys="getContextMenuDisabledKeys(dropdown.tabId)"
-    :x="dropdown.x"
-    :y="dropdown.y"
-    @update:visible="handleDropdownVisible"
-  ></ContextMenu>
-</template>
 
 <style scoped></style>

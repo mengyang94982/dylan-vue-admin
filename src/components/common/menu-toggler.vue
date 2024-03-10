@@ -1,3 +1,9 @@
+<template>
+  <ButtonIcon :tooltip-content="collapsed ? $t('icon.expand') : $t('icon.collapse')" tooltip-placement="bottom-start">
+    <SvgIcon :icon="icon" />
+  </ButtonIcon>
+</template>
+
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { $t } from '@/locales';
@@ -34,11 +40,5 @@ const icon = computed(() => {
   return icons[arrowIcon][collapsed];
 });
 </script>
-
-<template>
-  <ButtonIcon :tooltip-content="collapsed ? $t('icon.expand') : $t('icon.collapse')" tooltip-placement="bottom-start">
-    <SvgIcon :icon="icon" />
-  </ButtonIcon>
-</template>
 
 <style scoped></style>

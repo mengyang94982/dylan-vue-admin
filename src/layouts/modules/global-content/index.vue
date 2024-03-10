@@ -1,24 +1,3 @@
-<script setup lang="ts">
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
-
-defineOptions({
-  name: 'GlobalContent'
-});
-
-interface Props {
-  showPadding?: boolean;
-}
-
-withDefaults(defineProps<Props>(), {
-  showPadding: true
-});
-const appStore = useAppStore();
-const themeStore = useThemeStore();
-const routeStore = useRouteStore();
-</script>
-
 <template>
   <RouterView v-slot="{ Component, route }">
     <Transition
@@ -39,5 +18,26 @@ const routeStore = useRouteStore();
     </Transition>
   </RouterView>
 </template>
+
+<script setup lang="ts">
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { useRouteStore } from '@/store/modules/route';
+
+defineOptions({
+  name: 'GlobalContent'
+});
+
+interface Props {
+  showPadding?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  showPadding: true
+});
+const appStore = useAppStore();
+const themeStore = useThemeStore();
+const routeStore = useRouteStore();
+</script>
 
 <style scoped></style>

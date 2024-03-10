@@ -1,3 +1,16 @@
+<template>
+  <NLoadingBarProvider>
+    <NDialogProvider>
+      <NNotificationProvider>
+        <NMessageProvider>
+          <ContextHolder />
+          <slot></slot>
+        </NMessageProvider>
+      </NNotificationProvider>
+    </NDialogProvider>
+  </NLoadingBarProvider>
+</template>
+
 <script setup lang="ts">
 import { createTextVNode, defineComponent } from 'vue';
 import { useDialog, useLoadingBar, useMessage, useNotification } from 'naive-ui';
@@ -22,18 +35,5 @@ const ContextHolder = defineComponent({
   }
 });
 </script>
-
-<template>
-  <NLoadingBarProvider>
-    <NDialogProvider>
-      <NNotificationProvider>
-        <NMessageProvider>
-          <ContextHolder />
-          <slot></slot>
-        </NMessageProvider>
-      </NNotificationProvider>
-    </NDialogProvider>
-  </NLoadingBarProvider>
-</template>
 
 <style scoped></style>

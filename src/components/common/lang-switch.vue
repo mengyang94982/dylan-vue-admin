@@ -1,3 +1,13 @@
+<template>
+  <NDropdown :value="lang" :options="langOptions" trigger="hover" @select="changeLang">
+    <div>
+      <ButtonIcon :tooltip-content="tooltipContent" tooltip-placement="left">
+        <SvgIcon icon="heroicons:language" />
+      </ButtonIcon>
+    </div>
+  </NDropdown>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { $t } from '@/locales';
@@ -30,15 +40,5 @@ function changeLang(lang: App.I18n.LangType) {
   emit('changeLang', lang);
 }
 </script>
-
-<template>
-  <NDropdown :value="lang" :options="langOptions" trigger="hover" @select="changeLang">
-    <div>
-      <ButtonIcon :tooltip-content="tooltipContent" tooltip-placement="left">
-        <SvgIcon icon="heroicons:language" />
-      </ButtonIcon>
-    </div>
-  </NDropdown>
-</template>
 
 <style scoped></style>

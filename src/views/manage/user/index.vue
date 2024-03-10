@@ -18,14 +18,14 @@
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="640"
+        :scroll-x="962"
         :loading="loading"
         :pagination="pagination"
-        :row="item => item.id"
+        :row-key="item => item.id"
         class="sm:h-full"
       />
       <UserOperateDrawer
-        v-model:visivle="drawerVisible"
+        v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"
         @submitted="getData"
@@ -48,6 +48,7 @@ import UserSearch from './modules/user-search.vue';
 
 const appStore = useAppStore();
 const { bool: drawerVisible, setTrue: openDrawer } = useBoolean();
+
 const { columns, filteredColumns, data, loading, pagination, getData, searchParams, resetSearchParams } = useTable<
   Api.SystemManage.User,
   typeof fetchGetUserList,
@@ -66,6 +67,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
   },
   transformer: res => {
     const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
+
     return {
       data: records,
       pageNum: current,
@@ -175,17 +177,26 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
     }
   ]
 });
+
 const operateType = ref<OperateType>('add');
+
 function handleAdd() {
   operateType.value = 'add';
   openDrawer();
 }
+
 const checkedRowKeys = ref<string[]>([]);
+
 async function handleBatchDelete() {
+  // request
   window.$message?.success($t('common.deleteSuccess'));
+
   checkedRowKeys.value = [];
+
   getData();
 }
+
+/** the editing row data */
 const editingData = ref<Api.SystemManage.User | null>(null);
 
 function handleEdit(id: number) {
@@ -195,9 +206,12 @@ function handleEdit(id: number) {
 }
 
 async function handleDelete() {
+  // request
   window.$message?.success($t('common.deleteSuccess'));
+
   getData();
 }
+
 function getIndex(index: number) {
   const { page = 0, pageSize = 10 } = pagination;
   return String((page - 1) * pageSize + index + 1);

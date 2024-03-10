@@ -1,3 +1,21 @@
+<template>
+  <SimpleScrollbar>
+    <NMenu
+      v-model:expanded-keys="expandedKeys"
+      :mode="mode"
+      :value="selectedKey"
+      :collapsed="siderCollapse"
+      :collapsed-width="themeStore.sider.collapsedWidth"
+      :collapsed-icon-size="22"
+      :options="naiveMenus"
+      :inverted="darkTheme"
+      :indent="18"
+      responsive
+      @update:value="handleClickMenu"
+    />
+  </SimpleScrollbar>
+</template>
+
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -67,24 +85,6 @@ watch(
   }
 );
 </script>
-
-<template>
-  <SimpleScrollbar>
-    <NMenu
-      v-model:expanded-keys="expandedKeys"
-      :mode="mode"
-      :value="selectedKey"
-      :collapsed="siderCollapse"
-      :collapsed-width="themeStore.sider.collapsedWidth"
-      :collapsed-icon-size="22"
-      :options="naiveMenus"
-      :inverted="darkTheme"
-      :indent="18"
-      responsive
-      @update:value="handleClickMenu"
-    />
-  </SimpleScrollbar>
-</template>
 
 <style scoped>
 :deep(.n-menu-horizontal) {

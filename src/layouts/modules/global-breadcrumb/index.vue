@@ -1,3 +1,20 @@
+<template>
+  <NBreadcrumb v-if="themeStore.header.breadcrumb.visible">
+    <DefineBreadcrumbContent v-slot="{ breadcrumb }">
+      <div class="i-flex-y-center align-middle">
+        <component :is="breadcrumb.icon" v-if="themeStore.header.breadcrumb.showIcon" class="mr-4px text-icon" />
+        {{ breadcrumb.label }}
+      </div>
+    </DefineBreadcrumbContent>
+    <NBreadcrumbItem v-for="item in routeStore.breadcrumbs" :key="item.key">
+      <NDropdown v-if="item.options?.length" :options="item.options" @select="handleClickMenu">
+        <BreadcrumbContent :breadcrumb="item" />
+      </NDropdown>
+      <BreadcrumbContent v-else :breadcrumb="item" />
+    </NBreadcrumbItem>
+  </NBreadcrumb>
+</template>
+
 <script setup lang="ts">
 import { createReusableTemplate } from '@vueuse/core';
 
@@ -24,22 +41,5 @@ function handleClickMenu(key: RouteKey) {
   routerPushByKey(key);
 }
 </script>
-
-<template>
-  <NBreadcrumb v-if="themeStore.header.breadcrumb.visible">
-    <DefineBreadcrumbContent v-slot="{ breadcrumb }">
-      <div class="i-flex-y-center align-middle">
-        <component :is="breadcrumb.icon" v-if="themeStore.header.breadcrumb.showIcon" class="mr-4px text-icon" />
-        {{ breadcrumb.label }}
-      </div>
-    </DefineBreadcrumbContent>
-    <NBreadcrumbItem v-for="item in routeStore.breadcrumbs" :key="item.key">
-      <NDropdown v-if="item.options?.length" :options="item.options" @select="handleClickMenu">
-        <BreadcrumbContent :breadcrumb="item" />
-      </NDropdown>
-      <BreadcrumbContent v-else :breadcrumb="item" />
-    </NBreadcrumbItem>
-  </NBreadcrumb>
-</template>
 
 <style scoped></style>

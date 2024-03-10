@@ -1,3 +1,17 @@
+<template>
+  <component :is="activeTabComponent.component" :class="activeTabComponent.class" :style="cssVars" v-bind="bindProps">
+    <template #prefix>
+      <slot name="prefix"></slot>
+    </template>
+    <slot></slot>
+    <template #suffix>
+      <slot name="suffix">
+        <SvgClose v-if="closable" :class="[style['svg-close']]" @click="handleClose" />
+      </slot>
+    </template>
+  </component>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { Component } from 'vue';
@@ -79,19 +93,5 @@ function handleClose() {
   emit('close');
 }
 </script>
-
-<template>
-  <component :is="activeTabComponent.component" :class="activeTabComponent.class" :style="cssVars" v-bind="bindProps">
-    <template #prefix>
-      <slot name="prefix"></slot>
-    </template>
-    <slot></slot>
-    <template #suffix>
-      <slot name="suffix">
-        <SvgClose v-if="closable" :class="[style['svg-close']]" @click="handleClose" />
-      </slot>
-    </template>
-  </component>
-</template>
 
 <style scoped></style>

@@ -1,3 +1,12 @@
+<template>
+  <ButtonIcon
+    :icon="icon"
+    :tooltip-content="tooltipContent"
+    :tooltip-placement="tooltipPlacement"
+    @click="handleSwitch"
+  />
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { PopoverPlacement } from 'naive-ui';
@@ -40,14 +49,5 @@ const tooltipContent = computed(() => {
   return $t('icon.themeSchema');
 });
 </script>
-
-<template>
-  <ButtonIcon
-    :icon="icon"
-    :tooltip-content="tooltipContent"
-    :tooltip-placement="tooltipPlacement"
-    @click="handleSwitch"
-  />
-</template>
 
 <style scoped></style>

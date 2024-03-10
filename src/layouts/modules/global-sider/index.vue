@@ -1,3 +1,18 @@
+<template>
+  <DarkModeContainer class="flex-vertical-stretch wh-full shadow-sider" :inverted="darkMenu">
+    <GlobalLogo
+      v-if="showLogo"
+      :show-title="!appStore.siderCollapse"
+      :style="{ height: themeStore.header.height + 'px' }"
+    />
+    <VerticalMixMenu v-if="isVerticalMix">
+      <GlobalLogo :show-title="false" :style="{ height: themeStore.header.height + 'px' }" />
+    </VerticalMixMenu>
+    <HorizontalMixMenu v-else-if="isHorizontalMix" />
+    <VerticalMenu v-else :dark-theme="darkMenu" :menus="routeStore.menus" />
+  </DarkModeContainer>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
@@ -24,20 +39,5 @@ const darkMenu = computed(() => !themeStore.darkMode && !isHorizontalMix.value &
 
 const showLogo = computed(() => !isVerticalMix.value && !isHorizontalMix.value);
 </script>
-
-<template>
-  <DarkModeContainer class="flex-vertical-stretch wh-full shadow-sider" :inverted="darkMenu">
-    <GlobalLogo
-      v-if="showLogo"
-      :show-title="!appStore.siderCollapse"
-      :style="{ height: themeStore.header.height + 'px' }"
-    />
-    <VerticalMixMenu v-if="isVerticalMix">
-      <GlobalLogo :show-title="false" :style="{ height: themeStore.header.height + 'px' }" />
-    </VerticalMixMenu>
-    <HorizontalMixMenu v-else-if="isHorizontalMix" />
-    <VerticalMenu v-else :dark-theme="darkMenu" :menus="routeStore.menus" />
-  </DarkModeContainer>
-</template>
 
 <style scoped></style>
