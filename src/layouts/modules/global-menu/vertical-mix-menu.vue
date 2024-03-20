@@ -1,6 +1,13 @@
 <template>
-  <div class="flex h-full" @mouseleave="handleResetActiveMenu">
-    <FirstLevelMenu :active-menu-key="activeFirstLevelMenuKey" :inverted="siderInverted" @select="handleSelectMixMenu">
+  <div
+    class="flex h-full"
+    @mouseleave="handleResetActiveMenu"
+  >
+    <FirstLevelMenu
+      :active-menu-key="activeFirstLevelMenuKey"
+      :inverted="siderInverted"
+      @select="handleSelectMixMenu"
+    >
       <slot></slot>
     </FirstLevelMenu>
     <div
@@ -33,52 +40,55 @@
             @click="appStore.toggleMixSiderFixed"
           />
         </header>
-        <BaseMenu :menus="menus" :dark-theme="siderInverted" />
+        <BaseMenu
+          :menus="menus"
+          :dark-theme="siderInverted"
+        />
       </DarkModeContainer>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useBoolean } from '@sa/hooks';
-import { useAppStore } from '@/store/modules/app';
-import { useRouteStore } from '@/store/modules/route';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouterPush } from '@/hooks/common/router';
-import { useMixMenu } from '@/layouts/hooks/use-mix-menu';
-import FirstLevelMenu from '@/layouts/modules/global-menu/first-level-menu.vue';
-import BaseMenu from '@/layouts/modules/global-menu/base-menu.vue';
+import { computed } from 'vue'
+import { useBoolean } from '@sa/hooks'
+import { useAppStore } from '@/store/modules/app'
+import { useRouteStore } from '@/store/modules/route'
+import { useThemeStore } from '@/store/modules/theme'
+import { useRouterPush } from '@/hooks/common/router'
+import { useMixMenu } from '@/layouts/hooks/use-mix-menu'
+import FirstLevelMenu from '@/layouts/modules/global-menu/first-level-menu.vue'
+import BaseMenu from '@/layouts/modules/global-menu/base-menu.vue'
 
 defineOptions({
   name: 'VerticalMixMenu'
-});
+})
 
-const appStore = useAppStore();
-const themeStore = useThemeStore();
-const routeStore = useRouteStore();
-const { routerPushByKey } = useRouterPush();
-const { bool: drawerVisible, setBool: setDrawerVisible } = useBoolean();
-const { activeFirstLevelMenuKey, setActiveFirstLevelMenuKey, getActiveFirstLevelMenuKey } = useMixMenu();
+const appStore = useAppStore()
+const themeStore = useThemeStore()
+const routeStore = useRouteStore()
+const { routerPushByKey } = useRouterPush()
+const { bool: drawerVisible, setBool: setDrawerVisible } = useBoolean()
+const { activeFirstLevelMenuKey, setActiveFirstLevelMenuKey, getActiveFirstLevelMenuKey } = useMixMenu()
 
-const siderInverted = computed(() => !themeStore.darkMode && themeStore.sider.inverted);
+const siderInverted = computed(() => !themeStore.darkMode && themeStore.sider.inverted)
 
-const menus = computed(() => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || []);
+const menus = computed(() => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || [])
 
-const showDrawer = computed(() => (drawerVisible.value && menus.value.length) || appStore.mixSiderFixed);
+const showDrawer = computed(() => (drawerVisible.value && menus.value.length) || appStore.mixSiderFixed)
 
 function handleSelectMixMenu(menu: App.Global.Menu) {
-  setActiveFirstLevelMenuKey(menu.key);
+  setActiveFirstLevelMenuKey(menu.key)
   if (menu.children?.length) {
-    setDrawerVisible(true);
+    setDrawerVisible(true)
   } else {
-    routerPushByKey(menu.routeKey);
+    routerPushByKey(menu.routeKey)
   }
 }
 
 function handleResetActiveMenu() {
-  getActiveFirstLevelMenuKey();
-  setDrawerVisible(false);
+  getActiveFirstLevelMenuKey()
+  setDrawerVisible(false)
 }
 </script>
 

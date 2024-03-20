@@ -1,7 +1,16 @@
 <template>
   <div class="flex-vertical-stretch gap-16px overflow-hidden <sm:overflow-auto">
-    <RoleSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
-    <NCard :title="$t('page.manage.role.title')" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
+    <RoleSearch
+      v-model:model="searchParams"
+      @reset="resetSearchParams"
+      @search="getData"
+    />
+    <NCard
+      :title="$t('page.manage.role.title')"
+      :bordered="false"
+      size="small"
+      class="card-wrapper sm:flex-1-hidden"
+    >
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="filteredColumns"
@@ -35,19 +44,19 @@
 </template>
 
 <script setup lang="tsx">
-import { ref } from 'vue';
-import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { useBoolean } from '@sa/hooks';
-import { fetchGetRoleList } from '@/service/api';
-import { useAppStore } from '@/store/modules/app';
-import { useTable } from '@/hooks/common/table';
-import { $t } from '@/locales';
-import { enableStatusRecord } from '@/constants/business';
-import RoleOperateDrawer, { type OperateType } from './modules/role-operate-drawer.vue';
-import RoleSearch from './modules/role-search.vue';
+import { ref } from 'vue'
+import { NButton, NPopconfirm, NTag } from 'naive-ui'
+import { useBoolean } from '@sa/hooks'
+import { fetchGetRoleList } from '@/service/api'
+import { useAppStore } from '@/store/modules/app'
+import { useTable } from '@/hooks/common/table'
+import { $t } from '@/locales'
+import { enableStatusRecord } from '@/constants/business'
+import RoleOperateDrawer, { type OperateType } from './modules/role-operate-drawer.vue'
+import RoleSearch from './modules/role-search.vue'
 
-const appStore = useAppStore();
-const { bool: drawerVisible, setTrue: openDrawer } = useBoolean();
+const appStore = useAppStore()
+const { bool: drawerVisible, setTrue: openDrawer } = useBoolean()
 
 const { columns, filteredColumns, data, loading, pagination, getData, searchParams, resetSearchParams } = useTable<
   Api.SystemManage.Role,
@@ -65,14 +74,14 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
     roleCode: null
   },
   transformer: res => {
-    const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
+    const { records = [], current = 1, size = 10, total = 0 } = res.data || {}
 
     return {
       data: records,
       pageNum: current,
       pageSize: size,
       total
-    };
+    }
   },
   columns: () => [
     {
@@ -111,17 +120,17 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       width: 100,
       render: row => {
         if (row.status === null) {
-          return null;
+          return null
         }
 
         const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
           1: 'success',
           2: 'warning'
-        };
+        }
 
-        const label = $t(enableStatusRecord[row.status]);
+        const label = $t(enableStatusRecord[row.status])
 
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
+        return <NTag type={tagMap[row.status]}>{label}</NTag>
       }
     },
     {
@@ -131,14 +140,23 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => handleEdit(row.id)}>
+          <NButton
+            type="primary"
+            ghost
+            size="small"
+            onClick={() => handleEdit(row.id)}
+          >
             {$t('common.edit')}
           </NButton>
           <NPopconfirm onPositiveClick={() => handleDelete()}>
             {{
               default: () => $t('common.confirmDelete'),
               trigger: () => (
-                <NButton type="error" ghost size="small">
+                <NButton
+                  type="error"
+                  ghost
+                  size="small"
+                >
                   {$t('common.delete')}
                 </NButton>
               )
@@ -148,46 +166,46 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       )
     }
   ]
-});
+})
 
-const operateType = ref<OperateType>('add');
+const operateType = ref<OperateType>('add')
 
 function handleAdd() {
-  operateType.value = 'add';
-  openDrawer();
+  operateType.value = 'add'
+  openDrawer()
 }
 
-const checkedRowKeys = ref<string[]>([]);
+const checkedRowKeys = ref<string[]>([])
 
 async function handleBatchDelete() {
   // request
-  window.$message?.success($t('common.deleteSuccess'));
+  window.$message?.success($t('common.deleteSuccess'))
 
-  checkedRowKeys.value = [];
+  checkedRowKeys.value = []
 
-  getData();
+  getData()
 }
 
 /** the editing row data */
-const editingData = ref<Api.SystemManage.Role | null>(null);
+const editingData = ref<Api.SystemManage.Role | null>(null)
 
 function handleEdit(id: number) {
-  operateType.value = 'edit';
-  editingData.value = data.value.find(item => item.id === id) || null;
-  openDrawer();
+  operateType.value = 'edit'
+  editingData.value = data.value.find(item => item.id === id) || null
+  openDrawer()
 }
 
 async function handleDelete() {
   // request
-  window.$message?.success($t('common.deleteSuccess'));
+  window.$message?.success($t('common.deleteSuccess'))
 
-  getData();
+  getData()
 }
 
 function getIndex(index: number) {
-  const { page = 0, pageSize = 10 } = pagination;
+  const { page = 0, pageSize = 10 } = pagination
 
-  return String((page - 1) * pageSize + index + 1);
+  return String((page - 1) * pageSize + index + 1)
 }
 </script>
 

@@ -36,29 +36,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
-import type { LayoutMode } from '@sa/materials';
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import GlobalHeader from '../modules/global-header/index.vue';
-import GlobalSider from '../modules/global-sider/index.vue';
-import GlobalTab from '../modules/global-tab/index.vue';
-import GlobalContent from '../modules/global-content/index.vue';
-import GlobalFooter from '../modules/global-footer/index.vue';
-import ThemeDrawer from '../modules/theme-drawer/index.vue';
-import { setupMixMenuContext } from '../hooks/use-mix-menu';
+import { computed } from 'vue'
+// import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials'
+// import type { LayoutMode } from '@sa/materials'
+import AdminLayout from '@/components/layout/admin-layout/index.vue'
+import { LAYOUT_SCROLL_EL_ID } from '@/components/layout/admin-layout/shared'
+import type { LayoutMode } from '@/components/layout/admin-layout/types'
+import { useAppStore } from '@/store/modules/app'
+import { useThemeStore } from '@/store/modules/theme'
+import GlobalHeader from '../modules/global-header/index.vue'
+import GlobalSider from '../modules/global-sider/index.vue'
+import GlobalTab from '../modules/global-tab/index.vue'
+import GlobalContent from '../modules/global-content/index.vue'
+import GlobalFooter from '../modules/global-footer/index.vue'
+import ThemeDrawer from '../modules/theme-drawer/index.vue'
+import { setupMixMenuContext } from '../hooks/use-mix-menu'
 defineOptions({
   name: 'BaseLayout'
-});
-const appStore = useAppStore();
-const themeStore = useThemeStore();
+})
+const appStore = useAppStore()
+const themeStore = useThemeStore()
 
 const layoutMode = computed(() => {
-  const vertical: LayoutMode = 'vertical';
-  const horizontal: LayoutMode = 'horizontal';
-  return themeStore.layout.mode.includes(vertical) ? vertical : horizontal;
-});
+  const vertical: LayoutMode = 'vertical'
+  const horizontal: LayoutMode = 'horizontal'
+  return themeStore.layout.mode.includes(vertical) ? vertical : horizontal
+})
 
 const headerPropsConfig: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps> = {
   vertical: {
@@ -81,45 +84,45 @@ const headerPropsConfig: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps
     showMenu: true,
     showMenuToggler: false
   }
-};
+}
 
-const headerProps = computed(() => headerPropsConfig[themeStore.layout.mode]);
+const headerProps = computed(() => headerPropsConfig[themeStore.layout.mode])
 
-const siderVisible = computed(() => themeStore.layout.mode !== 'horizontal');
+const siderVisible = computed(() => themeStore.layout.mode !== 'horizontal')
 
-const isVerticalMix = computed(() => themeStore.layout.mode === 'vertical-mix');
+const isVerticalMix = computed(() => themeStore.layout.mode === 'vertical-mix')
 
-const isHorizontalMix = computed(() => themeStore.layout.mode === 'horizontal-mix');
+const isHorizontalMix = computed(() => themeStore.layout.mode === 'horizontal-mix')
 
-const siderWidth = computed(() => getSiderWidth());
+const siderWidth = computed(() => getSiderWidth())
 
-const siderCollapsedWidth = computed(() => getSiderCollapsedWidth());
+const siderCollapsedWidth = computed(() => getSiderCollapsedWidth())
 
 function getSiderWidth() {
-  const { width, mixWidth, mixChildMenuWidth } = themeStore.sider;
+  const { width, mixWidth, mixChildMenuWidth } = themeStore.sider
 
-  let w = isVerticalMix.value || isHorizontalMix.value ? mixWidth : width;
+  let w = isVerticalMix.value || isHorizontalMix.value ? mixWidth : width
 
   if (isVerticalMix.value && appStore.mixSiderFixed) {
-    w += mixChildMenuWidth;
+    w += mixChildMenuWidth
   }
 
-  return w;
+  return w
 }
 
 function getSiderCollapsedWidth() {
-  const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = themeStore.sider;
+  const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = themeStore.sider
 
-  let w = isVerticalMix.value || isHorizontalMix.value ? mixCollapsedWidth : collapsedWidth;
+  let w = isVerticalMix.value || isHorizontalMix.value ? mixCollapsedWidth : collapsedWidth
 
   if (isVerticalMix.value && appStore.mixSiderFixed) {
-    w += mixChildMenuWidth;
+    w += mixChildMenuWidth
   }
 
-  return w;
+  return w
 }
 
-setupMixMenuContext();
+setupMixMenuContext()
 </script>
 
 <style lang="scss">

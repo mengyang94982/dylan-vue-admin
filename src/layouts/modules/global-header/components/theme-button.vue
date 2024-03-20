@@ -7,14 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '@/store/modules/app';
-import { $t } from '@/locales';
+import { useAppStore } from '@/store/modules/app'
+import { $t } from '@/locales'
 
 defineOptions({
   name: 'ThemeButton'
-});
+})
 
-const appStore = useAppStore();
+const appStore = useAppStore()
 </script>
 
 <style scoped></style>

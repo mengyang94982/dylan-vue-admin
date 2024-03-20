@@ -1,4 +1,4 @@
-import { defineConfig } from '@soybeanjs/eslint-config';
+import { defineConfig } from '@dylanjs/eslint-config'
 
 export default defineConfig(
   {
@@ -24,7 +24,8 @@ export default defineConfig(
         {
           order: ['template', 'script', 'style']
         }
-      ]
+      ],
+      'vue/no-static-inline-styles': 'off'
     }
   }
-);
+)

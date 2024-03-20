@@ -4,7 +4,7 @@
  * @param env 当前环境
  */
 export function createServiceConfig(env: Env.ImportMeta) {
-  const mockURL = 'https://mock.apifox.com/m1/4059160-0-default';
+  const mockURL = 'https://mock.apifox.com/m1/4059160-0-default'
 
   const serviceConfigMap: App.Service.ServiceConfigMap = {
     dev: {
@@ -25,10 +25,10 @@ export function createServiceConfig(env: Env.ImportMeta) {
         demo: 'http://localhost:9530'
       }
     }
-  };
-  const { VITE_SERVICE_ENV = 'dev' } = env;
+  }
+  const { VITE_SERVICE_ENV = 'dev' } = env
 
-  return serviceConfigMap[VITE_SERVICE_ENV];
+  return serviceConfigMap[VITE_SERVICE_ENV]
 }
 
 /**
@@ -38,7 +38,7 @@ export function createServiceConfig(env: Env.ImportMeta) {
  */
 export function createProxyPattern(key?: App.Service.OtherBaseURLKey) {
   if (!key) {
-    return '/proxy-default';
+    return '/proxy-default'
   }
-  return `/proxy-${key}`;
+  return `/proxy-${key}`
 }

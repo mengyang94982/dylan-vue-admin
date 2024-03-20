@@ -9,18 +9,18 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { $t } from '@/locales';
+import { computed } from 'vue'
+import { $t } from '@/locales'
 
-defineOptions({ name: 'PinToggler' });
+defineOptions({ name: 'PinToggler' })
 
 interface Props {
-  pin?: boolean;
+  pin?: boolean
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const icon = computed(() => (props.pin ? 'mdi-pin-off' : 'mdi-pin'));
+const icon = computed(() => (props.pin ? 'mdi-pin-off' : 'mdi-pin'))
 </script>
 
 <style scoped></style>

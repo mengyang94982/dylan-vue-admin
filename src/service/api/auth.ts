@@ -1,4 +1,4 @@
-import { request } from '../request';
+import { request } from '../request'
 
 export function fetchLogin(userName: string, password: string) {
   return request<Api.Auth.LoginToken>({
@@ -8,13 +8,13 @@ export function fetchLogin(userName: string, password: string) {
       userName,
       password
     }
-  });
+  })
 }
 
 export function fetchGetUserInfo() {
   return request<Api.Auth.UserInfo>({
     url: '/auth/getUserInfo'
-  });
+  })
 }
 
 export function fetchRefreshToken(refreshToken: string) {
@@ -24,7 +24,7 @@ export function fetchRefreshToken(refreshToken: string) {
     data: {
       refreshToken
     }
-  });
+  })
 }
 
 export function fetchDebug() {
@@ -37,5 +37,5 @@ export function fetchDebug() {
     data: {
       a: 1
     }
-  });
+  })
 }

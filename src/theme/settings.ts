@@ -44,6 +44,6 @@ export const themeSettings: App.Theme.ThemeSetting = {
     height: 48,
     right: true
   }
-};
+}
 
-export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {};
+export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {}

@@ -1,14 +1,14 @@
-import process from 'node:process';
-import { URL, fileURLToPath } from 'node:url';
-import { defineConfig, loadEnv } from 'vite';
-import dayjs from 'dayjs';
-import { setupVitePlugins } from './build/plugins';
-import { createViteProxy } from './build/config';
+import process from 'node:process'
+import { URL, fileURLToPath } from 'node:url'
+import { defineConfig, loadEnv } from 'vite'
+import dayjs from 'dayjs'
+import { setupVitePlugins } from './build/plugins'
+import { createViteProxy } from './build/config'
 
 export default defineConfig(configEnv => {
-  const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as Env.ImportMeta;
+  const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as Env.ImportMeta
 
-  const buildTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const buildTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
 
   return {
     base: viteEnv.VITE_BASE_URL,
@@ -48,5 +48,5 @@ export default defineConfig(configEnv => {
         ignoreTryCatch: false
       }
     }
-  };
-});
+  }
+})

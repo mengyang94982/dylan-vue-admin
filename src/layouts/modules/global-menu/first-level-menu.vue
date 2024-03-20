@@ -8,7 +8,10 @@
         '!text-white !bg-primary': active && inverted
       }"
     >
-      <component :is="icon" :class="[isMini ? 'text-icon-smail' : 'text-icon-large']" />
+      <component
+        :is="icon"
+        :class="[isMini ? 'text-icon-smail' : 'text-icon-large']"
+      />
       <p
         class="w-full text-center ellipsis-text text012px transition-height-300"
         :class="[isMini ? 'h-0 pt-0' : 'h-24px pt-4px']"
@@ -40,53 +43,54 @@
 </template>
 
 <script setup lang="ts">
-import { SimpleScrollbar } from '@sa/materials';
-import { transformColorWithOpacity } from '@sa/utils';
-import { createReusableTemplate } from '@vueuse/core';
-import { computed } from 'vue';
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
+// import { SimpleScrollbar } from '@sa/materials'
+import { transformColorWithOpacity } from '@sa/utils'
+import { createReusableTemplate } from '@vueuse/core'
+import { computed } from 'vue'
+import SimpleScrollbar from '@/components/layout/simple-scrollbar/index'
+import { useAppStore } from '@/store/modules/app'
+import { useThemeStore } from '@/store/modules/theme'
+import { useRouteStore } from '@/store/modules/route'
 
 defineOptions({
   name: 'FirstLevelMenu'
-});
+})
 
 interface Props {
-  activeMenuKey?: string;
-  inverted?: boolean;
+  activeMenuKey?: string
+  inverted?: boolean
 }
 
-defineProps<Props>();
+defineProps<Props>()
 
 interface Emits {
-  (e: 'select', menu: App.Global.Menu): boolean;
+  (e: 'select', menu: App.Global.Menu): boolean
 }
 
-const emit = defineEmits<Emits>();
+const emit = defineEmits<Emits>()
 
-const appStore = useAppStore();
-const themeStore = useThemeStore();
-const routeStore = useRouteStore();
+const appStore = useAppStore()
+const themeStore = useThemeStore()
+const routeStore = useRouteStore()
 
 interface MixMenuItemProps {
-  label: App.Global.Menu['label'];
-  icon: App.Global.Menu['icon'];
-  active: boolean;
-  isMini: boolean;
+  label: App.Global.Menu['label']
+  icon: App.Global.Menu['icon']
+  active: boolean
+  isMini: boolean
 }
 
-const [DefineMixMenuItem, MixMenuItem] = createReusableTemplate<MixMenuItemProps>();
+const [DefineMixMenuItem, MixMenuItem] = createReusableTemplate<MixMenuItemProps>()
 
 const selectedBgColor = computed(() => {
-  const { darkMode, themeColor } = themeStore;
-  const light = transformColorWithOpacity(themeColor, 0.1, '#ffffff');
-  const dark = transformColorWithOpacity(themeColor, 0.3, '#000000');
-  return darkMode ? dark : light;
-});
+  const { darkMode, themeColor } = themeStore
+  const light = transformColorWithOpacity(themeColor, 0.1, '#ffffff')
+  const dark = transformColorWithOpacity(themeColor, 0.3, '#000000')
+  return darkMode ? dark : light
+})
 
 function handleClickMixMenu(menu: App.Global.Menu) {
-  emit('select', menu);
+  emit('select', menu)
 }
 </script>
 

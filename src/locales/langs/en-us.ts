@@ -411,6 +411,6 @@ const local: App.I18n.Schema = {
     pin: 'Pin',
     unpin: 'Unpin'
   }
-};
+}
 
-export default local;
+export default local

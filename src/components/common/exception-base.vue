@@ -12,12 +12,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { $t } from '@/locales';
+import { computed } from 'vue'
+import { $t } from '@/locales'
 
-defineOptions({ name: 'ExceptionBase' });
+defineOptions({ name: 'ExceptionBase' })
 
-type ExceptionType = '403' | '404' | '500';
+type ExceptionType = '403' | '404' | '500'
 
 interface Props {
   /**
@@ -27,18 +27,18 @@ interface Props {
    * - 404: not found
    * - 500: service error
    */
-  type: ExceptionType;
+  type: ExceptionType
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 const iconMap: Record<ExceptionType, string> = {
   '403': 'no-permission',
   '404': 'not-found',
   '500': 'service-error'
-};
+}
 
-const icon = computed(() => iconMap[props.type]);
+const icon = computed(() => iconMap[props.type])
 </script>
 
 <style scoped></style>

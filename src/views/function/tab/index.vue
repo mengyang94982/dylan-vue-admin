@@ -1,5 +1,8 @@
 <template>
-  <NSpace vertical :size="16">
+  <NSpace
+    vertical
+    :size="16"
+  >
     <NCard
       :title="$t('page.function.tab.tabOperate.title')"
       :bordered="false"
@@ -38,10 +41,20 @@
       <NDivider title-placement="left">{{ $t('page.function.tab.tabTitle.changeTitle') }}</NDivider>
       <NInputGroup class="max-w-240px">
         <NInput v-model:value="tabLabel" />
-        <NButton type="primary" @click="changeTabLabel">{{ $t('page.function.tab.tabTitle.change') }}</NButton>
+        <NButton
+          type="primary"
+          @click="changeTabLabel"
+        >
+          {{ $t('page.function.tab.tabTitle.change') }}
+        </NButton>
       </NInputGroup>
       <NDivider title-placement="left">{{ $t('page.function.tab.tabTitle.resetTitle') }}</NDivider>
-      <NButton type="error" ghost class="w-80px" @click="resetTabLabel">
+      <NButton
+        type="error"
+        ghost
+        class="w-80px"
+        @click="resetTabLabel"
+      >
         {{ $t('page.function.tab.tabTitle.reset') }}
       </NButton>
     </NCard>
@@ -49,22 +62,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouterPush } from '@/hooks/common/router';
-import { $t } from '@/locales';
-import { useTabStore } from '@/store/modules/tab';
+import { ref } from 'vue'
+import { useRouterPush } from '@/hooks/common/router'
+import { $t } from '@/locales'
+import { useTabStore } from '@/store/modules/tab'
 
-const tabStore = useTabStore();
-const { routerPushByKey } = useRouterPush();
+const tabStore = useTabStore()
+const { routerPushByKey } = useRouterPush()
 
-const tabLabel = ref('');
+const tabLabel = ref('')
 
 function changeTabLabel() {
-  tabStore.setTabLabel(tabLabel.value);
+  tabStore.setTabLabel(tabLabel.value)
 }
 
 function resetTabLabel() {
-  tabStore.resetTabLabel();
+  tabStore.resetTabLabel()
 }
 </script>
 

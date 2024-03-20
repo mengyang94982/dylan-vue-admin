@@ -1,15 +1,25 @@
 <template>
   <DefineButton v-slot="{ $slots, className }">
-    <NButton quaternary :class="className">
+    <NButton
+      quaternary
+      :class="className"
+    >
       <div class="flex-center gap-8px">
         <component :is="$slots.default" />
       </div>
     </NButton>
   </DefineButton>
 
-  <NTooltip v-if="tooltipContent" :placement="tooltipPlacement" :z-index="98">
+  <NTooltip
+    v-if="tooltipContent"
+    :placement="tooltipPlacement"
+    :z-index="98"
+  >
     <template #trigger>
-      <Button :class-name="cls" v-bind="$attrs">
+      <Button
+        :class-name="cls"
+        v-bind="$attrs"
+      >
         <slot>
           <SvgIcon :icon="icon" />
         </slot>
@@ -18,7 +28,11 @@
     {{ tooltipContent }}
   </NTooltip>
 
-  <Button v-else :class-name="cls" v-bind="$attrs">
+  <Button
+    v-else
+    :class-name="cls"
+    v-bind="$attrs"
+  >
     <slot>
       <SvgIcon :icon="icon" />
     </slot>
@@ -26,20 +40,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { createReusableTemplate } from '@vueuse/core';
-import type { PopoverPlacement } from 'naive-ui';
+import { computed } from 'vue'
+import { createReusableTemplate } from '@vueuse/core'
+import type { PopoverPlacement } from 'naive-ui'
 
 defineOptions({
   name: 'ButtonIcon',
   inheritAttrs: false
-});
+})
 
 interface Props {
-  class?: string;
-  icon?: string;
-  tooltipContent?: string;
-  tooltipPlacement?: PopoverPlacement;
+  class?: string
+  icon?: string
+  tooltipContent?: string
+  tooltipPlacement?: PopoverPlacement
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -47,25 +61,25 @@ const props = withDefaults(defineProps<Props>(), {
   icon: '',
   tooltipContent: '',
   tooltipPlacement: 'bottom'
-});
+})
 
 interface ButtonProps {
-  className: string;
+  className: string
 }
 
-const [DefineButton, Button] = createReusableTemplate<ButtonProps>();
+const [DefineButton, Button] = createReusableTemplate<ButtonProps>()
 
 const cls = computed(() => {
-  let clsStr = props.class;
+  let clsStr = props.class
 
   if (!clsStr.includes('h-')) {
-    clsStr += ' h-36px';
+    clsStr += ' h-36px'
   }
   if (!clsStr.includes('text-')) {
-    clsStr += ' text-icon';
+    clsStr += ' text-icon'
   }
-  return clsStr;
-});
+  return clsStr
+})
 </script>
 
 <style scoped></style>

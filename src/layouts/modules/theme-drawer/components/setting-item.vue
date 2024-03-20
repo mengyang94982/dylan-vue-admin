@@ -11,14 +11,14 @@
 <script setup lang="ts">
 defineOptions({
   name: 'SettingItem'
-});
+})
 
 interface Props {
   /** Label */
-  label: string;
+  label: string
 }
 
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <style scoped></style>

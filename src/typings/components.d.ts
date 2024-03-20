@@ -7,9 +7,13 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AdminLayout: typeof import('./../components/layout/admin-layout/index.vue')['default']
     AppProvider: typeof import('./../components/common/app-provider.vue')['default']
     BetterScroll: typeof import('./../components/custom/better-scroll.vue')['default']
     ButtonIcon: typeof import('./../components/custom/button-icon.vue')['default']
+    ButtonTab: typeof import('./../components/layout/page-tab/button-tab.vue')['default']
+    ChromeTab: typeof import('./../components/layout/page-tab/chrome-tab.vue')['default']
+    ChromeTabBg: typeof import('./../components/layout/page-tab/chrome-tab-bg.vue')['default']
     CountTo: typeof import('./../components/custom/count-to.vue')['default']
     DarkModeContainer: typeof import('./../components/common/dark-mode-container.vue')['default']
     ExceptionBase: typeof import('./../components/common/exception-base.vue')['default']
@@ -70,11 +74,14 @@ declare module 'vue' {
     NTag: typeof import('naive-ui')['NTag']
     NThing: typeof import('naive-ui')['NThing']
     NTooltip: typeof import('naive-ui')['NTooltip']
+    PageTab: typeof import('./../components/layout/page-tab/index.vue')['default']
     PinToggler: typeof import('./../components/common/pin-toggler.vue')['default']
     ReloadButton: typeof import('./../components/common/reload-button.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SimpleScrollbar: typeof import('./../components/layout/simple-scrollbar/index.vue')['default']
     SoybeanAvatar: typeof import('./../components/custom/soybean-avatar.vue')['default']
+    SvgClose: typeof import('./../components/layout/page-tab/svg-close.vue')['default']
     SvgIcon: typeof import('./../components/custom/svg-icon.vue')['default']
     SystemLogo: typeof import('./../components/common/system-logo.vue')['default']
     TableColumnSetting: typeof import('./../components/advanced/table-column-setting.vue')['default']

@@ -1,7 +1,13 @@
 <template>
   <DarkModeContainer class="flex-y-center wh-full px-16px shadow-tab">
-    <div ref="bsWrapper" class="flex-1-hidden h-full">
-      <BetterScroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: appStore.isMobile }">
+    <div
+      ref="bsWrapper"
+      class="flex-1-hidden h-full"
+    >
+      <BetterScroll
+        ref="bsScroll"
+        :options="{ scrollX: true, scrollY: false, click: appStore.isMobile }"
+      >
         <div
           ref="tabRef"
           class="flex h-full pr-18px"
@@ -21,15 +27,25 @@
             @contextmenu="handleContextMenu($event, tab.id)"
           >
             <template #prefix>
-              <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
+              <SvgIcon
+                :icon="tab.icon"
+                :local-icon="tab.localIcon"
+                class="inline-block align-text-bottom text-16px"
+              />
             </template>
             <span>{{ tab.label }}</span>
           </PageTab>
         </div>
       </BetterScroll>
     </div>
-    <ReloadButton :loading="!appStore.reloadFlag" @click="refresh" />
-    <FullScreen :full="appStore.fullContent" @click="appStore.toggleFullContent" />
+    <ReloadButton
+      :loading="!appStore.reloadFlag"
+      @click="refresh"
+    />
+    <FullScreen
+      :full="appStore.fullContent"
+      @click="appStore.toggleFullContent"
+    />
   </DarkModeContainer>
   <ContextMenu
     :visible="dropdown.visible"
@@ -42,100 +58,101 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, reactive, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useElementBounding } from '@vueuse/core';
-import { PageTab } from '@sa/materials';
-import BetterScroll from '@/components/custom/better-scroll.vue';
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
-import { useTabStore } from '@/store/modules/tab';
-import ContextMenu from './context-menu.vue';
+import { nextTick, reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useElementBounding } from '@vueuse/core'
+// import { PageTab } from '@sa/materials'
+import PageTab from '@/components/layout/page-tab/index.vue'
+import BetterScroll from '@/components/custom/better-scroll.vue'
+import { useAppStore } from '@/store/modules/app'
+import { useThemeStore } from '@/store/modules/theme'
+import { useRouteStore } from '@/store/modules/route'
+import { useTabStore } from '@/store/modules/tab'
+import ContextMenu from './context-menu.vue'
 
 defineOptions({
   name: 'GlobalTab'
-});
+})
 
-const route = useRoute();
-const appStore = useAppStore();
-const themeStore = useThemeStore();
-const routeStore = useRouteStore();
-const tabStore = useTabStore();
+const route = useRoute()
+const appStore = useAppStore()
+const themeStore = useThemeStore()
+const routeStore = useRouteStore()
+const tabStore = useTabStore()
 
-const bsWrapper = ref<HTMLElement>();
-const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper);
-const bsScroll = ref<InstanceType<typeof BetterScroll>>();
-const tabRef = ref<HTMLElement>();
+const bsWrapper = ref<HTMLElement>()
+const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper)
+const bsScroll = ref<InstanceType<typeof BetterScroll>>()
+const tabRef = ref<HTMLElement>()
 
-const TAB_DATA_ID = 'data-tab-id';
+const TAB_DATA_ID = 'data-tab-id'
 
 type TabNamedNodeMap = NamedNodeMap & {
-  [TAB_DATA_ID]: Attr;
-};
+  [TAB_DATA_ID]: Attr
+}
 
 async function scrollToActiveTab() {
-  await nextTick();
-  if (!tabRef.value) return;
+  await nextTick()
+  if (!tabRef.value) return
 
-  const { children } = tabRef.value;
+  const { children } = tabRef.value
 
   for (let i = 0; i < children.length; i += 1) {
-    const child = children[i];
+    const child = children[i]
 
-    const { value: tabId } = (child.attributes as TabNamedNodeMap)[TAB_DATA_ID];
+    const { value: tabId } = (child.attributes as TabNamedNodeMap)[TAB_DATA_ID]
 
     if (tabId === tabStore.activeTabId) {
-      const { left, width } = child.getBoundingClientRect();
-      const clientX = left + width / 2;
+      const { left, width } = child.getBoundingClientRect()
+      const clientX = left + width / 2
 
       setTimeout(() => {
-        scrollByClientX(clientX);
-      }, 50);
+        scrollByClientX(clientX)
+      }, 50)
 
-      break;
+      break
     }
   }
 }
 
 function scrollByClientX(clientX: number) {
-  const currentX = clientX - bsWrapperLeft.value;
-  const deltaX = currentX - bsWrapperWidth.value / 2;
+  const currentX = clientX - bsWrapperLeft.value
+  const deltaX = currentX - bsWrapperWidth.value / 2
 
   if (bsScroll.value?.instance) {
-    const { maxScrollX, x: leftX, scrollBy } = bsScroll.value.instance;
+    const { maxScrollX, x: leftX, scrollBy } = bsScroll.value.instance
 
-    const rightX = maxScrollX - leftX;
-    const update = deltaX > 0 ? Math.max(-deltaX, rightX) : Math.min(-deltaX, -leftX);
+    const rightX = maxScrollX - leftX
+    const update = deltaX > 0 ? Math.max(-deltaX, rightX) : Math.min(-deltaX, -leftX)
 
-    scrollBy(update, 0, 300);
+    scrollBy(update, 0, 300)
   }
 }
 
 function getContextMenuDisabledKeys(tabId: string) {
-  const disabledKeys: App.Global.DropdownKey[] = [];
+  const disabledKeys: App.Global.DropdownKey[] = []
 
   if (tabStore.isTabRetain(tabId)) {
-    disabledKeys.push('closeCurrent');
+    disabledKeys.push('closeCurrent')
   }
 
-  return disabledKeys;
+  return disabledKeys
 }
 
 async function handleCloseTab(tab: App.Global.Tab) {
-  await tabStore.removeTab(tab.id);
-  await routeStore.reCacheRoutesByKey(tab.routeKey);
+  await tabStore.removeTab(tab.id)
+  await routeStore.reCacheRoutesByKey(tab.routeKey)
 }
 
 async function refresh() {
-  appStore.reloadPage(500);
+  appStore.reloadPage(500)
 }
 
 interface DropdownConfig {
-  visible: boolean;
-  x: number;
-  y: number;
-  tabId: string;
+  visible: boolean
+  x: number
+  y: number
+  tabId: string
 }
 
 const dropdown: DropdownConfig = reactive({
@@ -143,30 +160,30 @@ const dropdown: DropdownConfig = reactive({
   x: 0,
   y: 0,
   tabId: ''
-});
+})
 
 function setDropdown(config: Partial<DropdownConfig>) {
-  Object.assign(dropdown, config);
+  Object.assign(dropdown, config)
 }
 
-let isClickContextMenu = false;
+let isClickContextMenu = false
 
 function handleDropdownVisible(visible: boolean) {
   if (!isClickContextMenu) {
-    setDropdown({ visible });
+    setDropdown({ visible })
   }
 }
 
 async function handleContextMenu(e: MouseEvent, tabId: string) {
-  e.preventDefault();
+  e.preventDefault()
 
-  const { clientX, clientY } = e;
+  const { clientX, clientY } = e
 
-  isClickContextMenu = true;
+  isClickContextMenu = true
 
-  const DURATION = dropdown.visible ? 150 : 0;
+  const DURATION = dropdown.visible ? 150 : 0
 
-  setDropdown({ visible: false });
+  setDropdown({ visible: false })
 
   setTimeout(() => {
     setDropdown({
@@ -174,31 +191,31 @@ async function handleContextMenu(e: MouseEvent, tabId: string) {
       x: clientX,
       y: clientY,
       tabId
-    });
-    isClickContextMenu = false;
-  }, DURATION);
+    })
+    isClickContextMenu = false
+  }, DURATION)
 }
 
 function init() {
-  tabStore.initTabStore(route);
+  tabStore.initTabStore(route)
 }
 
 // watch
 watch(
   () => route.fullPath,
   () => {
-    tabStore.addTab(route);
+    tabStore.addTab(route)
   }
-);
+)
 watch(
   () => tabStore.activeTabId,
   () => {
-    scrollToActiveTab();
+    scrollToActiveTab()
   }
-);
+)
 
 // init
-init();
+init()
 </script>
 
 <style scoped></style>
