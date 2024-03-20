@@ -1,6 +1,6 @@
 <template>
   <div
-    class=":soy: relative inline-flex justify-center items-center gap-16px -mr-18px px-24px py-6px cursor-pointer whitespace-nowrap"
+    class=":dy: relative inline-flex justify-center items-center gap-16px -mr-18px px-24px py-6px cursor-pointer whitespace-nowrap"
     :class="[
       style['chrome-tab'],
       { [style['chrome-tab_dark']]: darkMode },
@@ -9,7 +9,7 @@
     ]"
   >
     <div
-      class=":soy: absolute left-0 top-0 -z-1 w-full w-full h-full pointer-events-none"
+      class=":soy: absolute left-0 top-0 -z-1 w-full h-full pointer-events-none"
       :class="[style['chrome-tab__bg']]"
     >
       <ChromeTagBg />
@@ -76,5 +76,38 @@ defineSlots<Slots>()
 }
 .whitespace-nowrap {
   white-space: nowrap;
+}
+.absolute {
+  position: absolute;
+}
+.left-0 {
+  left: 0;
+}
+.top-0 {
+  top: 0;
+}
+.-z-1 {
+  z-index: -1;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.pointer-events-none {
+  pointer-events: none;
+}
+.right-7px {
+  right: 7px;
+}
+.w-1px {
+  width: 1px;
+}
+.h-16px {
+  height: 16px;
+}
+.bg-#1f2225 {
+  background: #1f2225;
 }
 </style>

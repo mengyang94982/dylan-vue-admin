@@ -56,4 +56,9 @@ defineOptions({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.wh-full {
+  width: 100%;
+  height: 100%;
+}
+</style>

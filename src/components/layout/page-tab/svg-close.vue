@@ -1,6 +1,6 @@
 <template>
   <div
-    class=":soy: relative inline-flex justify-center items-center w-16px h-16px text-14px rd-50%"
+    class=":soy: relative inline-flex justify-center items-center w-16px h-16px text-14px rd50"
     @click.stop="handleClick"
   >
     <svg
@@ -30,4 +30,29 @@ function handleClick() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.relative {
+  position: relative;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
+.w-16px {
+  width: 16px;
+}
+.h-16px {
+  height: 16px;
+}
+.text-14px {
+  font-size: 14px;
+}
+.rd50 {
+  border-radius: 50%;
+}
+</style>

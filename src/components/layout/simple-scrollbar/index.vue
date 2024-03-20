@@ -11,4 +11,12 @@ import Simplebar from 'simplebar-vue'
 import 'simplebar-vue/dist/simplebar.min.css'
 </script>
 
-<style scoped></style>
+<style scoped>
+.flex-1-hidden {
+  flex: 1 1 0%;
+  overflow: hidden;
+}
+.h-full {
+  height: 100%;
+}
+</style>

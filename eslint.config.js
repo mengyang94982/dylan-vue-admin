@@ -25,7 +25,9 @@ export default defineConfig(
           order: ['template', 'script', 'style']
         }
       ],
-      'vue/no-static-inline-styles': 'off'
+      'vue/no-static-inline-styles': 'off',
+      'vue/html-quotes': ['error', 'double'],
+      'max-params': 'off'
     }
   }
 )

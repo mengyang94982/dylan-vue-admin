@@ -236,7 +236,7 @@ function handleClickMask() {
   flex-direction: column;
 }
 .h-full {
-  height: 100px;
+  height: 100%;
 }
 .overflow-y-auto {
   overflow-y: auto;
